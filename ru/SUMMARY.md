@@ -2,7 +2,10 @@
 
 * [Введение](README.md)
 * [Вводный урок](Lesson00.md/README.md)
-    * [Intro](introduction.md)
+    * [Описание](description.md)
+    * [Установка](installation.md)
+    * [Запуска примера](example_run.md)
+    * [Управление сеансом](control_run.md)
 * [Урок 1](lesson01.md)
 * [Урок 2](lesson02.md)
 * [Урок 3](lesson03.md)

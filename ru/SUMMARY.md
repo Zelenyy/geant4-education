@@ -1,11 +1,11 @@
 # Оглавление
 
 * [Введение](README.md)
-* [Вводный урок](Lesson00.md/README.md)
-    * [Описание](Lesson00.md/description.md)
-    * [Установка](Lesson00.md/installation.md)
-    * [Запуска примера](Lesson00.md/example_run.md)
-    * [Управление сеансом](Lesson00.md/control_run.md)
+* [Вводный урок](Lesson00/README.md)
+    * [Описание](Lesson00/description.md)
+    * [Установка](Lesson00/installation.md)
+    * [Запуска примера](Lesson00/example_run.md)
+    * [Управление сеансом](Lesson00/control_run.md)
 * [Урок 1](Lesson01/README.md)
     * [Основные принципы](Lesson01/basic_principes.md)
     * [Система единиц](Lesson01/system_of_units.md)

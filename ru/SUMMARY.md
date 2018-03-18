@@ -4,7 +4,7 @@
 * [Вводный урок](Lesson00/README.md)
     * [Описание](Lesson00/description.md)
     * [Установка](Lesson00/installation.md)
-    * [Запуска примера](Lesson00/example_run.md)
+    * [Запуск примера](Lesson00/example_run.md)
     * [Управление сеансом](Lesson00/control_run.md)
 * [Урок 1](Lesson01/README.md)
     * [Основные принципы](Lesson01/basic_principes.md)

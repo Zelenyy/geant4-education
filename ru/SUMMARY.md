@@ -15,7 +15,6 @@
   * [Материалы](Lesson02\materials.md)
   * [Поля](Lesson02\fields.md)
   * [Детекторы](Lesson02\detectors.md)
-
 * [Урок 3](lesson03.md)
 * [Урок 4](lesson04.md)
 * [Урок 5](lesson05.md)

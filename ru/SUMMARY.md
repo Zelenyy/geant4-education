@@ -11,6 +11,11 @@
   * [Обязательные настройки](Lesson01/mandatory_options.md)
   * [Запуск и управление сеансом](Lesson01/run.md)
 * [Урок 2](Lesson02\README.md)
+  * [Структура](Lesson02\structure.md)
+  * [Материалы](Lesson02\materials.md)
+  * [Поля](Lesson02\fields.md)
+  * [Детекторы](Lesson02\detectors.md)
+
 * [Урок 3](lesson03.md)
 * [Урок 4](lesson04.md)
 * [Урок 5](lesson05.md)

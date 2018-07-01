@@ -10,7 +10,7 @@
   * [Система единиц](Lesson01/system_of_units.md)
   * [Обязательные настройки](Lesson01/mandatory_options.md)
   * [Запуск и управление сеансом](Lesson01/run.md)
-*[Урок 2](Lesson02\README.md)
+* [Урок 2](Lesson02\README.md)
 * [Урок 3](Lesson03\README.md)
   * [Структура](Lesson03\structure.md)
   * [Материалы](Lesson03\materials.md)

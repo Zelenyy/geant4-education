@@ -84,6 +84,8 @@ int main() {
 
 
     runManager->Initialize();
+    
+    runManager->BeamOn(10);
 
 
 

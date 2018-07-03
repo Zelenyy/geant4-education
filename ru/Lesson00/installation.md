@@ -81,6 +81,8 @@ sudo apt-get install libxerces-c3.1 libxerces-c-dev
 
 Для GUI будем использовать qt - установим значение параметра `GEANT4_USE_QT` равным ON. Если хотим использовать qt4 (а я рекомендую его использовать), то установите значение параметра  `GEANT4_FORCE_QT4` равным  `ON`. Для установки необходимых зависимостей выполните:
 ```bash
+sudo apt-get install libxmu-dev lubxmu
+
 sudo apt-get install qt5-default
 #или
 sudo apt-get install qt4-default

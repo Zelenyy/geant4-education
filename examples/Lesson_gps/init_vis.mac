@@ -1,0 +1,29 @@
+# Macro file for the initialization of example B1
+# in interactive session
+#
+# Set some default verbose
+/control/verbose 0
+/control/saveHistory
+/run/verbose 0
+
+# Initialize kernel
+/run/initialize
+
+
+# Use these open statements to open selected visualization
+
+# Use this open statement to create an OpenGL view:
+/vis/open OGL 600x600-0+0
+
+# Disable auto refresh and quieten vis messages whilst scene and
+# trajectories are established:
+/vis/viewer/set/autoRefresh false
+/vis/verbose errors
+
+# Draw geometry:
+/vis/drawVolume
+
+# Decorations
+
+# Axes, scale, etc.
+/vis/scene/add/axes    # Simple axes: x=red, y=green, z=blue.

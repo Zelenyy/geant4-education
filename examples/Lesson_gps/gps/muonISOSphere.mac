@@ -1,0 +1,11 @@
+/gps/particle mu-
+/gps/pos/type Surface
+/gps/pos/shape Sphere
+/gps/pos/centre 0 0 1.1 m
+/gps/pos/radius 1. m
+/gps/ang/type iso
+/gps/ang/mintheta 90 deg
+/gps/ene/type User
+/gps/hist/type energy
+/gps/hist/point 100000 0
+/gps/hist/point 1000000 1

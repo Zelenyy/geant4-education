@@ -13,7 +13,7 @@
   * [Структура проекта](Lesson-run-and-cmake/project-structure.md)
   * [Система сборки cmake](Lesson-run-and-cmake/cmake.md)
   * [Иницилизация пользовательских действий](Lesson-run-and-cmake/action.md)
-  * [Запуск и управление сеансом](Lesson-run-and--cmake/run.md)
+  * [Запуск и управление сеансом](Lesson-run-and-cmake/run.md)
 * [Урок 3](Lesson-gps/README.md)
 * [Урок 4](Lesson-basic-geometry/README.md)
   * [Структура](Lesson-basic-geometry/structure.md)

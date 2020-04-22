@@ -10,8 +10,11 @@ Welcome to geant4-education's documentation!
    :maxdepth: 1
    :caption: Contents:
 
+   Базовое руководство по моделированию в GEANT4 <manual/man>
    Мастер-класс "Распад пи0-мезона" <pi-decay/intro>
+   Советы и подсказки <other/tips>
    Записи вебинаров <video>
+   
 
 
 

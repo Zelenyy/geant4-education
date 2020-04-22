@@ -1,0 +1,250 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="ru" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="ru" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>Урок 5: Базовая геометрия &mdash; документация geant4-education 0.0.1</title>
+  
+
+  
+  
+  
+  
+
+  
+  <script type="text/javascript" src="../../_static/js/modernizr.min.js"></script>
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../../" src="../../_static/documentation_options.js"></script>
+        <script src="../../_static/jquery.js"></script>
+        <script src="../../_static/underscore.js"></script>
+        <script src="../../_static/doctools.js"></script>
+        <script src="../../_static/language_data.js"></script>
+        <script src="../../_static/translations.js"></script>
+    
+    <script type="text/javascript" src="../../_static/js/theme.js"></script>
+
+    
+
+  
+  <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+    <link rel="index" title="Алфавитный указатель" href="../../genindex.html" />
+    <link rel="search" title="Поиск" href="../../search.html" />
+    <link rel="next" title="Урок 6: Базовая физика" href="basic_physics.html" />
+    <link rel="prev" title="Урок 4: Генератор первичных частиц" href="primary_generator.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="../../index.html" class="icon icon-home"> geant4-education
+          
+
+          
+          </a>
+
+          
+            
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <p class="caption"><span class="caption-text">Contents:</span></p>
+<ul class="current">
+<li class="toctree-l1 current"><a class="reference internal" href="../man.html">Базовое руководство по моделированию в GEANT4</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="introduction.html">Введение</a></li>
+<li class="toctree-l2"><a class="reference internal" href="installation.html">Установка</a></li>
+<li class="toctree-l2"><a class="reference internal" href="primary_generator.html">Урок 4: Генератор первичных частиц</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">Урок 5: Базовая геометрия</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#geant-4">Геометрическая структура GEANT 4</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#id2">Создание материалов (? возможно пока только предопределенные материалы)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#id3">Создания однородного поля</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#id4">Базовое описание детекторов (Вывод в файл)</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="basic_physics.html">Урок 6: Базовая физика</a></li>
+<li class="toctree-l2"><a class="reference internal" href="action_initialization.html">Урок 7: Инициализация пользовательских действий</a></li>
+<li class="toctree-l2"><a class="reference internal" href="intermedia_geometry.html">Урок 8: Продвинутая геометрия</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../pi-decay/intro.html">Мастер-класс &quot;Распад пи0-мезона&quot;</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../other/tips.html">Советы и подсказки</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../video.html">Записи вебинаров</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../index.html">geant4-education</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../../index.html">Docs</a> &raquo;</li>
+        
+          <li><a href="../man.html">Базовое руководство по моделированию с помощью GEANT4</a> &raquo;</li>
+        
+      <li>Урок 5: Базовая геометрия</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+            <a href="../../_sources/manual/manual/basic_geometry.md.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="id1">
+<h1>Урок 5: Базовая геометрия<a class="headerlink" href="#id1" title="Ссылка на этот заголовок">¶</a></h1>
+<div class="section" id="geant-4">
+<h2>Геометрическая структура GEANT 4<a class="headerlink" href="#geant-4" title="Ссылка на этот заголовок">¶</a></h2>
+<p>Как уже было замечено, геометрическая модель geant4 основывается на трех абстракциях:</p>
+<ol class="simple">
+<li><p><em>Твердое тело</em> - описывает форму и размеры реального геометрического объема</p></li>
+<li><p><em>Логический объем</em> - описывает материал, электромагние и прочие поля, а также содержит информацию об используемомо твердом теле и детекторе для данного объема.</p></li>
+<li><p><em>Физический объем</em> - имменно этот объем …. Здесь задаются координаты центра тела и его поворот относительно лабораторной системы координат</p></li>
+</ol>
+<p>Кроме того отдельные объёмы могут быть объединены в регионы.</p>
+<p>Реплика</p>
+</div>
+<div class="section" id="id2">
+<h2>Создание материалов (? возможно пока только предопределенные материалы)<a class="headerlink" href="#id2" title="Ссылка на этот заголовок">¶</a></h2>
+<p>Пользователь может как определить свой материал, так и использовать предопределённые материалы. Характеристики и названия предопределённых материалов расположены в приложении к <em>руководству пользователя</em></p>
+</div>
+<div class="section" id="id3">
+<h2>Создания однородного поля<a class="headerlink" href="#id3" title="Ссылка на этот заголовок">¶</a></h2>
+<p>Для задания однородного магнитного поля мы используем класс</p>
+<p>Его нужно зарегистрировать в менеджере полей и в используемом логическом объеме. Также можно поместить в магнитное поле всю установку</p>
+<p>Создание электрического поля несколько трудней, так как в отличие от силы Лоренца, сила действующая со стороны электрического поля на частицу не является гироскопической и влияет на длину проходимую частицей до взаимодействия.</p>
+<p>Поэтому мы должны определить объекты, которые будут заниматься интегрированием и решением уравнений движения.</p>
+</div>
+<div class="section" id="id4">
+<h2>Базовое описание детекторов (Вывод в файл)<a class="headerlink" href="#id4" title="Ссылка на этот заголовок">¶</a></h2>
+<p>Для регистрации результатов взаимодействия в объеме с каждым логисческим(?) объемом можно проассоциировать объект-наследник класс детектор. При каждом взаимодействии внутри объема будет вызываться метод Hit, принимающий на вход  шаг  регистрируемой частицы</p>
+</div>
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="basic_physics.html" class="btn btn-neutral float-right" title="Урок 6: Базовая физика" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="primary_generator.html" class="btn btn-neutral float-left" title="Урок 4: Генератор первичных частиц" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2020, Mikhail Zelenyi
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

@@ -1,0 +1,390 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="ru" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="ru" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>Установка &mdash; документация geant4-education 0.0.1</title>
+  
+
+  
+  
+  
+  
+
+  
+  <script type="text/javascript" src="../../_static/js/modernizr.min.js"></script>
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../../" src="../../_static/documentation_options.js"></script>
+        <script src="../../_static/jquery.js"></script>
+        <script src="../../_static/underscore.js"></script>
+        <script src="../../_static/doctools.js"></script>
+        <script src="../../_static/language_data.js"></script>
+        <script src="../../_static/translations.js"></script>
+    
+    <script type="text/javascript" src="../../_static/js/theme.js"></script>
+
+    
+
+  
+  <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+    <link rel="index" title="Алфавитный указатель" href="../../genindex.html" />
+    <link rel="search" title="Поиск" href="../../search.html" />
+    <link rel="next" title="Урок 4: Генератор первичных частиц" href="primary_generator.html" />
+    <link rel="prev" title="Введение" href="introduction.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="../../index.html" class="icon icon-home"> geant4-education
+          
+
+          
+          </a>
+
+          
+            
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <p class="caption"><span class="caption-text">Contents:</span></p>
+<ul class="current">
+<li class="toctree-l1 current"><a class="reference internal" href="../man.html">Базовое руководство по моделированию в GEANT4</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="introduction.html">Введение</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">Установка</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#id2">Подготовка к работе и установка программ</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#id3">Базовая сборка:</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#gdml">Подключение GDML</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#gui">Подключение GUI</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#conda-cross-linux">Установка с помощью conda cross-linux</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#id4">Запуск примера</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#id5">Управление сеансом</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="primary_generator.html">Урок 4: Генератор первичных частиц</a></li>
+<li class="toctree-l2"><a class="reference internal" href="basic_geometry.html">Урок 5: Базовая геометрия</a></li>
+<li class="toctree-l2"><a class="reference internal" href="basic_physics.html">Урок 6: Базовая физика</a></li>
+<li class="toctree-l2"><a class="reference internal" href="action_initialization.html">Урок 7: Инициализация пользовательских действий</a></li>
+<li class="toctree-l2"><a class="reference internal" href="intermedia_geometry.html">Урок 8: Продвинутая геометрия</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../pi-decay/intro.html">Мастер-класс &quot;Распад пи0-мезона&quot;</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../other/tips.html">Советы и подсказки</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../video.html">Записи вебинаров</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../index.html">geant4-education</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../../index.html">Docs</a> &raquo;</li>
+        
+          <li><a href="../man.html">Базовое руководство по моделированию с помощью GEANT4</a> &raquo;</li>
+        
+      <li>Установка</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+            <a href="../../_sources/manual/manual/installation.md.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="id1">
+<h1>Установка<a class="headerlink" href="#id1" title="Ссылка на этот заголовок">¶</a></h1>
+<div class="section" id="id2">
+<h2>Подготовка к работе и установка программ<a class="headerlink" href="#id2" title="Ссылка на этот заголовок">¶</a></h2>
+<p>Для работы я буду использовать ОС Ubuntu, однако большая часть излагаемого материала будет верна для любой платформы.</p>
+<p>Для того что бы использовать GEANT4 мы должны его установить. Есть три способа сделать это:</p>
+<ul class="simple">
+<li><p>Скачать скомпилированный GEANT4 (бинарную сборку) с  официального сайта.</p></li>
+<li><p>Скачать виртуальную машину с предустановленным GEANT4.</p></li>
+<li><p>Скачать исходный код и скомпилировать его самостаятельно.</p></li>
+</ul>
+<p>Для учащихся ещё только осваивающих мир linux, наиболее удобным будет второй путь, однако для практического использования наиболее правильным является последний пункт, по трем причинам. Во-первых, бинарная сборка не содержит некоторых библиотек необходимых нам для изучения тем продвинутого уровня, а также может не подойти к используемой вами платформе. Во-вторых, это позволяет попрактиковаться в сборке крупных библиотек на C++. В-третьих, исходный код нам все равно понадобится, как для лучшего понимания внутреннего устройства GEANT4, так и для решения наших прикладных задач.</p>
+<p>Итак, мы скачали и распаковали архив с исходным кодом GEANT4.</p>
+<p>Рассмотрим процесс установки GEANT4. Для его сборки нам необходимы некоторые библиотеки (их список дам в руководстве по установке), так же нам потребуются некоторые полезные утилиты.</p>
+<div class="section" id="id3">
+<h3>Базовая сборка:<a class="headerlink" href="#id3" title="Ссылка на этот заголовок">¶</a></h3>
+<ul class="simple">
+<li><p>Процесс сборки описан для версии <code class="docutils literal notranslate"><span class="pre">4.10.03</span></code>, однако данная инструкция может использоваться и для сборки других версий с небольшими отличиями в процессе.</p></li>
+<li><p>Скачиваем архив с <a class="reference external" href="http://geant4.web.cern.ch/geant4/support/download.shtml">официального сайта</a>.</p></li>
+<li><p>Создаем директорию <code class="docutils literal notranslate"><span class="pre">GEANT4</span></code> в своем домашнем каталоге.</p></li>
+<li><p>Распаковываем в неё скачанный архив.</p></li>
+<li><p>В директории <code class="docutils literal notranslate"><span class="pre">GEANT4</span></code> создаем папки <code class="docutils literal notranslate"><span class="pre">build</span></code> и <code class="docutils literal notranslate"><span class="pre">install</span></code>. В папке <code class="docutils literal notranslate"><span class="pre">build</span></code> мы будем собирать GEANT4, а в папку <code class="docutils literal notranslate"><span class="pre">install</span></code> устанавливать.</p></li>
+<li><p><em>Опционально</em>: можно скачать data-файлы, и разместить их в директории data, что бы затем использовать их при установке. Это совершенно необязательно, так как GEANT4 может скачать их сам при сборке.</p></li>
+<li><p>Устанавливаем необходимые утилиты для сборки: компилятор С++, cmake и консольный конфигуратор ccmake, а также необходимые библиотеки (для Debian/Ubuntu, в других дистрибутивах Linux вам следует использовать пакетный менеджер этого дистрибутива):</p></li>
+</ul>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>    <span class="n">sudo</span> <span class="n">apt</span><span class="o">-</span><span class="n">get</span> <span class="n">install</span> <span class="n">g</span><span class="o">++</span> <span class="n">cmake</span> <span class="n">cmake</span><span class="o">-</span><span class="n">curses</span><span class="o">-</span><span class="n">gui</span>
+    <span class="n">sudo</span> <span class="n">apt</span><span class="o">-</span><span class="n">get</span> <span class="n">install</span> <span class="n">libexpat1</span> <span class="n">libexpat1</span><span class="o">-</span><span class="n">dev</span>
+</pre></div>
+</div>
+<ul>
+<li><p>Переходим в директорию <code class="docutils literal notranslate"><span class="pre">build</span></code>:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="nb">cd</span> ~/GEANT4/build
+</pre></div>
+</div>
+</li>
+<li><p>Запускаем <code class="docutils literal notranslate"><span class="pre">ccmake</span></code>:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>ccmake ../geant4.10.03
+</pre></div>
+</div>
+</li>
+</ul>
+<p>Здесь в качестве аргумента команды <code class="docutils literal notranslate"><span class="pre">ccmake</span></code> используется путь до директории, распакованной из скаченного нами архива с GEANT4. <code class="docutils literal notranslate"><span class="pre">ccmake</span></code> читает расположенный в этой директории файл <code class="docutils literal notranslate"><span class="pre">CMakeLIsts.txt</span></code>, для того чтобы настроить параметры сборки.</p>
+<ul class="simple">
+<li><p>После того как <code class="docutils literal notranslate"><span class="pre">ccmake</span></code> открылся, жмем клавишу <code class="docutils literal notranslate"><span class="pre">c</span></code>, если все нормально, то <code class="docutils literal notranslate"><span class="pre">ccmake</span></code> выдаст предупреждение об отсуствии data-файлов, которое можно смело проигнорировать. Так же может выдать ошибку если в системе не установлена какая-либо библиотека, тогда её надо доустановить.</p></li>
+<li><p>Если <code class="docutils literal notranslate"><span class="pre">ccmake</span></code> успешно сконфигурировался, отредактируем следующие параметры:</p>
+<ul>
+<li><p><code class="docutils literal notranslate"><span class="pre">CMAKE_INSTALL_PREFIX</span></code> - по умолчанию он пытается утсановить GEANT4 в системную директорию, однако я предлагаю прописать здесь путь до папки <code class="docutils literal notranslate"><span class="pre">install</span></code> (если же вы будет устанавливать в директорию по умолчанию, то не забудьте добавить команду <code class="docutils literal notranslate"><span class="pre">sudo</span></code> перед <code class="docutils literal notranslate"><span class="pre">make</span> <span class="pre">install</span></code>).</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">GEANT4_INSTALL_DATA</span></code> - установим значение <code class="docutils literal notranslate"><span class="pre">ON</span></code>, для того чтобы GEANT4 сам скачал data-файлы. Если у вас уже есть эти файлы, укажаите к ним путь в параметре <code class="docutils literal notranslate"><span class="pre">GEANT4_INSTALL_DATADIR</span></code>.</p></li>
+</ul>
+</li>
+<li><p>Жмем клавишу <code class="docutils literal notranslate"><span class="pre">c</span></code>, до тех пор пока не появиться опция нажать клавишу <code class="docutils literal notranslate"><span class="pre">g</span></code>. Жмем <code class="docutils literal notranslate"><span class="pre">g</span></code>. <code class="docutils literal notranslate"><span class="pre">ccmake</span></code> создаст <code class="docutils literal notranslate"><span class="pre">makefile</span></code> и закроется.</p></li>
+<li><p>Собираем GEANT4:</p></li>
+</ul>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>    make -jN
+    <span class="c1"># где N количество ядер которое вы хотите задействовать,</span>
+    <span class="c1"># посмотреть количество ядер можно в htop </span>
+    <span class="c1"># (sudo apt-get install htop)</span>
+</pre></div>
+</div>
+<ul>
+<li><p>Устанавливаем GEANT4:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>make install
+<span class="c1"># если вы не изменяли параметр CMAKE_INSTALL_PREFIX, </span>
+<span class="c1"># то используйте sudo make install, </span>
+<span class="c1"># еще лучше воспользуейтесь checkinstall</span>
+</pre></div>
+</div>
+</li>
+</ul>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>- Устанавливаем переменные окружения:
+    ```bash
+    source /path/to/install/bin/geant4.sh
+    # Данную команду нужно прописать в ~/.bashrc для автоматической установки переменных среды.
+</pre></div>
+</div>
+<ul class="simple">
+<li><p>Проверяем работоспособность на примерах согласно <a class="reference external" href="example_run">этому параграфу</a>.</p></li>
+<li><p>Папку <code class="docutils literal notranslate"><span class="pre">build</span></code> мы не удаляем, так как она пригодится нам когда мы захотим пересобрать GEANT4 с другими опциями. Это позволит нам в дальнейшем пересобирать только те файлы, которые будут изменены (не забудьте только изменить значение параметра, отвечающего за загрузку data-файлов, дабы не скачивать их несколько раз).</p></li>
+</ul>
+<p>Если у вас в системе установлен пакет <code class="docutils literal notranslate"><span class="pre">anaconda</span></code> могут возникнуть проблемы с зависимостями библиотек. Это решается или удалением пути к <code class="docutils literal notranslate"><span class="pre">anaconda</span></code> из переменной <code class="docutils literal notranslate"><span class="pre">PATH</span></code>, или использованием <code class="docutils literal notranslate"><span class="pre">anaconda</span></code> (смотрим раздел Установка с помощью conda).</p>
+</div>
+<div class="section" id="gdml">
+<h3>Подключение GDML<a class="headerlink" href="#gdml" title="Ссылка на этот заголовок">¶</a></h3>
+<p>Для загрузки геометрии из внешних gdml-файлов, нам потребуется подключить GDML.</p>
+<ul class="simple">
+<li><p>Устанавливаем необходимые библиотеки:</p></li>
+</ul>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>sudo apt-get install libxerces-c3.1 libxerces-c-dev
+</pre></div>
+</div>
+<ul class="simple">
+<li><p>Запускаем <code class="docutils literal notranslate"><span class="pre">ccmake</span></code> в папке <code class="docutils literal notranslate"><span class="pre">build</span></code>.</p></li>
+<li><p>Установим значение <code class="docutils literal notranslate"><span class="pre">ON</span></code> для параметра <code class="docutils literal notranslate"><span class="pre">GEANT4_USE_GDML</span></code>.</p></li>
+<li><p>Конфигурируем, генерируем, собираем и устанавливаем.</p></li>
+</ul>
+</div>
+<div class="section" id="gui">
+<h3>Подключение GUI<a class="headerlink" href="#gui" title="Ссылка на этот заголовок">¶</a></h3>
+<p>Для GUI будем использовать qt - установим значение параметра <code class="docutils literal notranslate"><span class="pre">GEANT4_USE_QT</span></code> равным ON. Если хотим использовать qt4 (а я рекомендую его использовать), то установите значение параметра  <code class="docutils literal notranslate"><span class="pre">GEANT4_FORCE_QT4</span></code> равным  <code class="docutils literal notranslate"><span class="pre">ON</span></code>. Для установки необходимых зависимостей выполните:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>sudo apt-get install libxmu-dev lubxmu
+
+sudo apt-get install qt5-default
+<span class="c1">#или</span>
+sudo apt-get install qt4-default
+</pre></div>
+</div>
+</div>
+</div>
+<div class="section" id="conda-cross-linux">
+<h2>Установка с помощью conda cross-linux<a class="headerlink" href="#conda-cross-linux" title="Ссылка на этот заголовок">¶</a></h2>
+<p>Если вы не имеет прав суперпользователя, или системные репозитории безнадежно устарели, или вы просто не хотите с ними связываться, то можно использовать пакетный менеджер <code class="docutils literal notranslate"><span class="pre">conda</span></code> для установки дополнительных библиотек.</p>
+<ul class="simple">
+<li><p>Устанавливаем Anaconda или Miniconda c <a class="reference external" href="https://www.anaconda.com/download/#linux">официального сайта</a>.</p></li>
+<li><p>Устанавливаем необходимые пакеты:</p></li>
+</ul>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>    conda install -c anaconda gcc
+    conda install libgcc
+    conda install -c anaconda xerces-c
+    conda install -c anaconda cmake
+    conda install -c anaconda qt
+</pre></div>
+</div>
+<p>Конфигурируем, генерируем, собираем и устанавливаем согласно базовой инструкции.</p>
+</div>
+<div class="section" id="id4">
+<h2>Запуск примера<a class="headerlink" href="#id4" title="Ссылка на этот заголовок">¶</a></h2>
+<p>Для проверки работостособности запустим один из примеров.</p>
+<ul>
+<li><p>Создадим директорию для сборки примера:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>mkdir build
+<span class="nb">cd</span> build
+</pre></div>
+</div>
+</li>
+<li><p>Запустим систему сборки <code class="docutils literal notranslate"><span class="pre">cmake</span></code>:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>cmake path/to/GEANT4/install/share/Geant4-10.3.0/examples/basic/B1/ <span class="c1">#путь до примера</span>
+make
+</pre></div>
+</div>
+</li>
+<li><p>Если все отработало без ошибок, то запустим скомпилированный пример:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>./exampleB1
+</pre></div>
+</div>
+<p>В зависимости от того установлен GUI или нет, будет запущена либо консольная, либо графическая сессия для работы с программой. В дальнейшем я буду предпологать, что GUI установлен и пользователь запускает графическую сессию.</p>
+</li>
+</ul>
+</div>
+<div class="section" id="id5">
+<h2>Управление сеансом<a class="headerlink" href="#id5" title="Ссылка на этот заголовок">¶</a></h2>
+<p>Для взаимодействия с сеансом и изменения параметров модели пользователь может применять GEANT Shell - это интерактивная оболочка (консльная или графическая), позволяющаю изменять параметры геометрии, генератора частиц, визуализации и прочих параметров с помощью набора команд, а так же исполнющая написанные пользователем макросы.
+Так запустив пример из предыдущего параграфа мы как раз окажемся в этой интерактивной оболочек.
+Давайте попробуем провзаимодествовать с симуляцией. Введем в командную строку текст:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>\<span class="n">run</span>\<span class="n">beamOn</span> <span class="mi">10</span>
+</pre></div>
+</div>
+<p>Данная команда запускает симуляцию  на 10 событий. Команды в общем виде имебт следующую структуру:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>\<span class="n">раздел</span>\<span class="n">подраздел</span>\<span class="o">...</span>\<span class="n">команда</span> <span class="n">обязательный</span>\<span class="n">_аргумент</span> <span class="o">...</span> <span class="p">[</span><span class="n">необязательный</span>\<span class="n">_аргумент</span><span class="p">]</span> <span class="o">...</span>
+</pre></div>
+</div>
+<p>Все команды распределены по разделам для удобства (относительного) ориентации и могут иметь или не иметь аргументы. Аргументы могут быть обязательными и необязательными, для последних есть значения по умолчанию. При вводе команнда и аргументы разделяются пробелом.</p>
+<p>Разбор полезных команд мы будет производить более детально в соответсвующих тематических параграфах.</p>
+</div>
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="primary_generator.html" class="btn btn-neutral float-right" title="Урок 4: Генератор первичных частиц" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="introduction.html" class="btn btn-neutral float-left" title="Введение" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2020, Mikhail Zelenyi
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

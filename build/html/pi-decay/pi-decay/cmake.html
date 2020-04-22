@@ -36,7 +36,7 @@
   <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
     <link rel="index" title="Алфавитный указатель" href="../../genindex.html" />
     <link rel="search" title="Поиск" href="../../search.html" />
-    <link rel="next" title="Видеозаписи вебинаров" href="../../video.html" />
+    <link rel="next" title="Геометрия GEANT4" href="geo.html" />
     <link rel="prev" title="Введение" href="../intro.html" /> 
 </head>
 
@@ -83,16 +83,23 @@
             
               <p class="caption"><span class="caption-text">Contents:</span></p>
 <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../../manual/man.html">Базовое руководство по моделированию в GEANT4</a></li>
 <li class="toctree-l1 current"><a class="reference internal" href="../intro.html">Мастер-класс &quot;Распад пи0-мезона&quot;</a><ul class="current">
-<li class="toctree-l2 current"><a class="current reference internal" href="#">Как собрать с++ проект используя cmake, как установить GEANT4 и как подключить его к вашему проекту:</a><ul>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">Как собрать с++ проект используя cmake, как установить GEANT4 и как подключить его к вашему проекту</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="#hello-world">Hello world</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#geant4">Установка GEANT4</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#id1">Подключение GEANT4 к нашему проекту</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#id2">Подключаем дополнительные файлы и создаем заготовку для моделирования</a></li>
 </ul>
 </li>
+<li class="toctree-l2"><a class="reference internal" href="geo.html">Как описывать геометрию эксперимента, визуализировать её и управлять визуализацией</a></li>
+<li class="toctree-l2"><a class="reference internal" href="gen.html">Как генерировать первичные частицы, использовать встроенные генераторы и таблицы распадов</a></li>
+<li class="toctree-l2"><a class="reference internal" href="mes.html">Как управлять параметрами симуляции</a></li>
+<li class="toctree-l2"><a class="reference internal" href="sd.html">Как моделировать работу детектора</a></li>
+<li class="toctree-l2"><a class="reference internal" href="input.html">Как выводить результаты моделирования в ROOT и HDF файлы</a></li>
 </ul>
 </li>
+<li class="toctree-l1"><a class="reference internal" href="../../other/tips.html">Советы и подсказки</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../video.html">Записи вебинаров</a></li>
 </ul>
 
@@ -185,7 +192,7 @@
 <ul class="simple">
 <li><p><code class="docutils literal notranslate"><span class="pre">cmake_minimum_required(VERSION</span> <span class="pre">3.8</span> <span class="pre">FATAL_ERROR)</span></code> — устанавливает минимальную версию cmake используемую в проекте.</p></li>
 <li><p><code class="docutils literal notranslate"><span class="pre">project(pi-decay)</span></code> — задает имя проекта, которое используется как <code class="docutils literal notranslate"><span class="pre">cmake</span></code>, так и внешними программами, например, IDE.</p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">add_executable(pi-decay</span> <span class="pre">main.cc</span></code> —  добаляет задание на создание испольняемого файл  с именем <code class="docutils literal notranslate"><span class="pre">pi-deacy</span></code>, используя код из файла <code class="docutils literal notranslate"><span class="pre">main.cc</span></code>.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">add_executable(pi-decay</span> <span class="pre">main.cc</span></code> —  добавляет задание на создание исполняемого файл  с именем <code class="docutils literal notranslate"><span class="pre">pi-deacy</span></code>, используя код из файла <code class="docutils literal notranslate"><span class="pre">main.cc</span></code>.</p></li>
 </ul>
 <p>Теперь попробуем собрать проект, для этого мы создадим отдельную директорию в которой будет происходить сборка проекта, такую директорию обычно называют <code class="docutils literal notranslate"><span class="pre">build</span></code>. Никогда не собирайте проект прямо в той же директории где лежат файлы с кодом — запаритесь потом отделять зерна от плевел, создайте поддиректорию, её при необходимости будет легко удалить.</p>
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>mkdir build <span class="o">&amp;&amp;</span> <span class="nb">cd</span> build
@@ -214,7 +221,7 @@
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="nb">source</span> path/to/geant4/instalation/geant4.sh
 </pre></div>
 </div>
-<p>Для того чтобы не выполнять эту команду каждый раз, можно добавить её в файл <code class="docutils literal notranslate"><span class="pre">~/.bashrc</span></code>. Тогда она будет автоматчески выполнятся при каждом запуске терминала. Если вы хотите чтобы эти переменые окружения унаследовали графиеческие прихожения (например, ваша IDE), нужно или запускать их из консоли, или проводить настройку в соответсвии с вашим графическим окружением.</p>
+<p>Для того чтобы не выполнять эту команду каждый раз, можно добавить её в файл <code class="docutils literal notranslate"><span class="pre">~/.bashrc</span></code>. Тогда она будет автоматически выполнятся при каждом запуске терминала. Если вы хотите чтобы эти переменные окружения унаследовали графические приложения (например, ваша IDE), нужно или запускать их из консоли, или проводить настройку в соответствии с вашим графическим окружением.</p>
 <p>Теперь добавим GEANT4 в наш проект, отредактировав файл <code class="docutils literal notranslate"><span class="pre">CMakeLists.txt</span></code>:</p>
 <div class="highlight-cmake notranslate"><div class="highlight"><pre><span></span><span class="nb">cmake_minimum_required</span><span class="p">(</span><span class="s">VERSION</span> <span class="s">3.8</span> <span class="s">FATAL_ERROR</span><span class="p">)</span>
 <span class="nb">project</span><span class="p">(</span><span class="s">pi-decay</span><span class="p">)</span>
@@ -234,7 +241,7 @@
 </div>
 <p>Разберем внесенные модификации:</p>
 <ul class="simple">
-<li><p><code class="docutils literal notranslate"><span class="pre">option(WITH_GEANT4_UIVIS</span> <span class="pre">&quot;Build</span> <span class="pre">example</span> <span class="pre">with</span> <span class="pre">Geant4</span> <span class="pre">UI</span> <span class="pre">and</span> <span class="pre">Vis</span> <span class="pre">drivers&quot;</span> <span class="pre">ON</span></code> — включает поддержку инреактивной и графической сессий.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">option(WITH_GEANT4_UIVIS</span> <span class="pre">&quot;Build</span> <span class="pre">example</span> <span class="pre">with</span> <span class="pre">Geant4</span> <span class="pre">UI</span> <span class="pre">and</span> <span class="pre">Vis</span> <span class="pre">drivers&quot;</span> <span class="pre">ON</span></code> — включает поддержку интерактивной и графической сессий.</p></li>
 <li><p><code class="docutils literal notranslate"><span class="pre">find_package(...)</span></code> — автоматически ищет и подключает cmake-модули GEANT4 (не сами библиотеки!),  что бы оно работало, должно быть выполнен скрипт <code class="docutils literal notranslate"><span class="pre">geant4.sh</span></code>.</p></li>
 <li><p><code class="docutils literal notranslate"><span class="pre">include(${Geant4_USE_FILE})</span></code> — подключает заголовочные файлы GEANT4.</p></li>
 <li><p><code class="docutils literal notranslate"><span class="pre">target_link_libraries(pi-decay</span> <span class="pre">${Geant4_LIBRARIES})</span></code> — динамически присоединяет к нашему исполняемому файлу библиотеки GEANT4.</p></li>
@@ -254,7 +261,7 @@
 <div class="section" id="id2">
 <h2>Подключаем дополнительные файлы и создаем заготовку для моделирования<a class="headerlink" href="#id2" title="Ссылка на этот заголовок">¶</a></h2>
 <p>Пока мы создали проект состоящий только из одного файла с кодом, однако в реальности код проект распределяется по нескольким файлам, которые отвечают за какую отдельную часть проекта. Например, для того чтобы начать симуляцию в GEANT4 пользователь обязан самостоятельно описать геометрию своего эксперимента, задать генератор первичных событий и выбрать используемую физику. Давайте создадим заготовку содержащие отдельные файлы для геометрии и генератора первичных частиц и подключим их к нашему проекту.</p>
-<p>Для начала создадим две директории: <code class="docutils literal notranslate"><span class="pre">include</span></code> в которой мы будем размещать заголовочные файлы и <code class="docutils literal notranslate"><span class="pre">src</span></code> в которомы мы будем размешать файлы с реализацией.</p>
+<p>Для начала создадим две директории: <code class="docutils literal notranslate"><span class="pre">include</span></code> в которой мы будем размещать заголовочные файлы и <code class="docutils literal notranslate"><span class="pre">src</span></code> в которой мы будем размешать файлы с реализацией.</p>
 <p>В директорию <code class="docutils literal notranslate"><span class="pre">include</span></code> мы поместим файлы <code class="docutils literal notranslate"><span class="pre">DetectorConstruction.hh</span></code>  и <code class="docutils literal notranslate"><span class="pre">PrimaryGeneratorAction.hh</span></code> со следующим содержанием (его суть мы разберем в следующих главах).</p>
 <p><code class="docutils literal notranslate"><span class="pre">DetectorConstruction.hh</span></code>:</p>
 <div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="cp">#ifndef PI_DECAY_DETECTORCONSTRUCTION_HH</span>
@@ -393,7 +400,7 @@
 <span class="p">}</span>
 </pre></div>
 </div>
-<p>Теперь давайте подключим эти файлы к нашему проекту?, добавив эти строчки в файл <code class="docutils literal notranslate"><span class="pre">CMakeLists.txt</span></code>:</p>
+<p>Теперь давайте подключим эти файлы к нашему проекту, добавив эти строчки в файл <code class="docutils literal notranslate"><span class="pre">CMakeLists.txt</span></code>:</p>
 <div class="highlight-cmake notranslate"><div class="highlight"><pre><span></span><span class="nb">include_directories</span><span class="p">(</span><span class="o">${</span><span class="nv">PROJECT_SOURCE_DIR</span><span class="o">}</span><span class="s">/include</span><span class="p">)</span>
 <span class="nb">file</span><span class="p">(</span><span class="s">GLOB</span> <span class="s">sources</span> <span class="o">${</span><span class="nv">PROJECT_SOURCE_DIR</span><span class="o">}</span><span class="s">/src/*.cc</span><span class="p">)</span>
 </pre></div>
@@ -416,7 +423,7 @@
   
     <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
       
-        <a href="../../video.html" class="btn btn-neutral float-right" title="Видеозаписи вебинаров" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+        <a href="geo.html" class="btn btn-neutral float-right" title="Геометрия GEANT4" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
       
       
         <a href="../intro.html" class="btn btn-neutral float-left" title="Введение" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>

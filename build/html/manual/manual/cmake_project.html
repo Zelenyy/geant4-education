@@ -1,0 +1,284 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="ru" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="ru" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>cmake &mdash; документация geant4-education 0.0.1</title>
+  
+
+  
+  
+  
+  
+
+  
+  <script type="text/javascript" src="../../_static/js/modernizr.min.js"></script>
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../../" src="../../_static/documentation_options.js"></script>
+        <script src="../../_static/jquery.js"></script>
+        <script src="../../_static/underscore.js"></script>
+        <script src="../../_static/doctools.js"></script>
+        <script src="../../_static/language_data.js"></script>
+        <script src="../../_static/translations.js"></script>
+    
+    <script type="text/javascript" src="../../_static/js/theme.js"></script>
+
+    
+
+  
+  <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+    <link rel="index" title="Алфавитный указатель" href="../../genindex.html" />
+    <link rel="search" title="Поиск" href="../../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="../../index.html" class="icon icon-home"> geant4-education
+          
+
+          
+          </a>
+
+          
+            
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <p class="caption"><span class="caption-text">Contents:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../man.html">Базовое руководство по моделированию в GEANT4</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../pi-decay/intro.html">Мастер-класс &quot;Распад пи0-мезона&quot;</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../other/tips.html">Советы и подсказки</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../video.html">Записи вебинаров</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../index.html">geant4-education</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../../index.html">Docs</a> &raquo;</li>
+        
+      <li>cmake</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+            <a href="../../_sources/manual/manual/cmake_project.md.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="cmake">
+<h1>cmake<a class="headerlink" href="#cmake" title="Ссылка на этот заголовок">¶</a></h1>
+<div class="section" id="id1">
+<h2>Структура проекта<a class="headerlink" href="#id1" title="Ссылка на этот заголовок">¶</a></h2>
+<p>Немного поговорим о том, как не надо программировать. Типичная ошибка это складывать весь код в один файл, как мы сделали в предыдущем уроке. Правильное распределение исходного кода по файлам упрощает понимание кода и работу с ним. К сожалению в C++ нет общепринятого метода распределения кода по отдельным файлам и директориям проекта, хотя есть некоторые рекомендации. Чаще всего лучше делать так, как принято в вашей команде, или же так, как принято в фреймворке с которым вы работаете (это позволяет унифицировать проект и облегчает обмен проектами).</p>
+<p>Так что мы возьмем код из предыдущего проекта, и распределим его по отдельным файлам, исходя из рекомендаций, приведенных ниже. Отмечу, что это именно рекомендации по внешнему виду, они не влияют на корректность программы, но обеспечивают комфортную работу.</p>
+<ul class="simple">
+<li><p>В c++ файлы с кодом разделяются на заголовочные файлы (header, ), содержащие определения классов и функций, и собственно файлы с исходным кодом (source, сc-файл), содержащие реализацию функций и методов класса.</p></li>
+<li><p>Нет общепринятого стандарта на расширения файлов. Наиболее распространнённые расширения для заголовочных файлов это <code class="docutils literal notranslate"><span class="pre">.hh</span></code>, <code class="docutils literal notranslate"><span class="pre">.hpp</span></code>, <code class="docutils literal notranslate"><span class="pre">.hp</span></code>, <code class="docutils literal notranslate"><span class="pre">.h++</span></code>, <code class="docutils literal notranslate"><span class="pre">.hxx</span></code>,<code class="docutils literal notranslate"><span class="pre">.icc</span></code>,<code class="docutils literal notranslate"><span class="pre">.inl</span></code>,<code class="docutils literal notranslate"><span class="pre">.tcc</span></code>, для файлов с исходниками <code class="docutils literal notranslate"><span class="pre">.cc</span></code>,<code class="docutils literal notranslate"><span class="pre">.cpp</span></code>,<code class="docutils literal notranslate"><span class="pre">.cp</span></code>,<code class="docutils literal notranslate"><span class="pre">.cxx</span></code>,<code class="docutils literal notranslate"><span class="pre">.i</span></code>,<code class="docutils literal notranslate"><span class="pre">.ii</span></code>,<code class="docutils literal notranslate"><span class="pre">.m</span></code>,<code class="docutils literal notranslate"><span class="pre">.mm</span></code>. В GEANT4 используется <code class="docutils literal notranslate"><span class="pre">.hh</span></code> и <code class="docutils literal notranslate"><span class="pre">.cc</span></code>, этой нотации я и буду следовать, также в дальнейшем для краткости я буду употреблять слова hh-файл и сc-файл для соответствующего типа файла.</p></li>
+<li><p>Также нет общепринятого стандарта на расположение файлов в директории (в отличии от, например, Java и Python, где есть определенные требования к структуре проекта). В GEANT4 принято hh-файлы хранить в директории <code class="docutils literal notranslate"><span class="pre">include</span></code>, а cc-файлы (кроме файла с функцией <code class="docutils literal notranslate"><span class="pre">main</span></code>) в директории <code class="docutils literal notranslate"><span class="pre">src</span></code>. В качестве примера приведу структуру проекта после того, как мы корректно оформим программу из предыдущего урока:</p></li>
+</ul>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>.
+├── include
+│   ├── ActionInitialization.hh
+│   ├── DetectorConstruction.hh
+│   └── PrimaryGeneratorAction.hh
+├── src
+│   ├── ActionInitialization.cc
+│   ├── DetectorConstruction.cc
+│   └── PrimaryGeneratorAction.cc
+├── CMakeLists.txt
+├── init_vis.mac
+└── main.cc
+</pre></div>
+</div>
+<ul class="simple">
+<li><p>Для каждого класса нужно писать отдельную пару hh- и cc-файлов. В заголовочных файлах желательно писать только определение класса, без реализации методов (что практически никем не соблюдается). Название файлов до расширения обычно делают совпадающим с именем класса. Для имен классов в GEANT4 принят PascalCase, то есть имя класса состоит из слов без разделителей, каждое слово начинается с заглавной буквы, например <code class="docutils literal notranslate"><span class="pre">PrimaryGeneratorAction</span></code>.</p></li>
+<li><p>Прочие файлы распределяются удобным для вас образом, я обычно выделяю отдельные директории для gdml-файлов, макросов с описанием источников, управляющих макросов.</p></li>
+</ul>
+<p>В следующем параграфе мы обсудим как организовать файл <code class="docutils literal notranslate"><span class="pre">CMakeLists.txt</span></code>, что бы он собирал наш код в работающую программу.</p>
+</div>
+<div class="section" id="id2">
+<h2>Система сборки cmake<a class="headerlink" href="#id2" title="Ссылка на этот заголовок">¶</a></h2>
+<p>Итак, чтобы не компилировать каждый файл по отдельности и потом вручную не собирать их в одну программу, люди сделали набор инструментов делающих это автоматически.
+В частности для сборки проектов на C/C++ в linux принято использовать набор утилит autotools, главная из которых <code class="docutils literal notranslate"><span class="pre">make</span></code>. Эта программа вызывается из командной строки, и вызванная без аргументов ищет makefile - файл содержащий инструкции по сборке проекта. Однако оказалось, что процесс написания этого makefile тоже можно автоматизировать, и люди создали cmake - утилиту генерирующую makefile, по более упрощенному описанию. Таким образом сборка происходит в два этапа, сначала cmake генерирует makefile, затем make собирает программу.
+Сборка происходит обычно следующим образом. Мы создаем директорию (обычно с именем <code class="docutils literal notranslate"><span class="pre">build</span></code>) для того, чтобы потом можно было одним движение удалить весь мусор остающийся после сборки, и в этой директори вызываем <code class="docutils literal notranslate"><span class="pre">cmake</span></code>, в качестве аргумента передав путь до файла <code class="docutils literal notranslate"><span class="pre">CMakeLists.txt</span></code>:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>cmake path/to/CMakeLists.txt
+</pre></div>
+</div>
+<p>Также мы можем вызвать команду <code class="docutils literal notranslate"><span class="pre">ccmake</span></code> и произвести настройку сборки, как мы это делали, когда устанавливали GEANT4.
+После того, как был удачно сгенерирован makefile, мы вызываем <code class="docutils literal notranslate"><span class="pre">make</span></code> и смотрим как собирается наша программа.</p>
+<p>Теперь рассмотрим содержимое файла <code class="docutils literal notranslate"><span class="pre">CMakeLists.txt</span></code></p>
+<div class="highlight-cmake notranslate"><div class="highlight"><pre><span></span><span class="c"># Задаем минимальныю версию cmake</span>
+<span class="nb">CMAKE_MINIMUM_REQUIRED</span><span class="p">(</span><span class="s">VERSION</span> <span class="s">2.6</span> <span class="s">FATAL_ERROR</span><span class="p">)</span>
+<span class="c"># Задаем имя проекта</span>
+<span class="nb">PROJECT</span><span class="p">(</span><span class="s">lesson02</span><span class="p">)</span>
+
+<span class="c"># Будет успешно если путь к cmake модулям GEANT4 будет в переменных окружения системы</span>
+<span class="c"># Данная команда позвляет автоматически подключать билиотеки установденные в систему, их разработчки предусмотрел такую возможность</span>
+<span class="nb">FIND_PACKAGE</span><span class="p">(</span><span class="s">Geant4</span> <span class="s">REQUIRED</span> <span class="s">ui_all</span> <span class="s">vis_all</span><span class="p">)</span>
+
+<span class="c"># Эпик фейл если GEANT4 не найден</span>
+<span class="c"># Так же это пример, как можно использовать условные операторы при сборке</span>
+<span class="nb">IF</span><span class="p">(</span><span class="s">NOT</span> <span class="s">Geant4_FOUND</span><span class="p">)</span>
+    <span class="nb">MESSAGE</span><span class="p">(</span><span class="s">FATAL_ERROR</span> <span class="s2">&quot;Geant4 not found!&quot;</span><span class="p">)</span>
+<span class="nb">ENDIF</span><span class="p">(</span><span class="s">NOT</span> <span class="s">Geant4_FOUND</span><span class="p">)</span>
+
+<span class="c"># Подключаем заголовочные файлы GEANT4</span>
+<span class="nb">INCLUDE</span><span class="p">(</span><span class="o">${</span><span class="nv">Geant4_USE_FILE</span><span class="o">}</span><span class="p">)</span>
+<span class="c"># Подключаем заголовочные файлы нашего проекта</span>
+<span class="c"># ${PROJECT_SOURCE_DIR} - обращение к переменной cmake, содержащей путь до</span>
+<span class="c"># файла CMakeLists.txt</span>
+<span class="nb">INCLUDE_DIRECTORIES</span><span class="p">(</span><span class="o">${</span><span class="nv">PROJECT_SOURCE_DIR</span><span class="o">}</span><span class="s">/include</span><span class="p">)</span>
+
+<span class="c">#Cоздаем переменную содержащую пути к исходним файлам</span>
+<span class="nb">FILE</span><span class="p">(</span><span class="s">GLOB</span> <span class="s">sources</span> <span class="o">${</span><span class="nv">PROJECT_SOURCE_DIR</span><span class="o">}</span><span class="s">/src/*.cc</span><span class="p">)</span>
+
+<span class="c"># Создаем исполняемый файл</span>
+<span class="nb">ADD_EXECUTABLE</span><span class="p">(</span><span class="s">lesson02.exe</span> <span class="s">lesson02.cc</span> <span class="o">${</span><span class="nv">sources</span><span class="o">}</span><span class="p">)</span>
+
+<span class="c"># Линкуем исполняемый файл и внешние билиотеки</span>
+<span class="nb">TARGET_LINK_LIBRARIES</span><span class="p">(</span><span class="s">lesson02.exe</span> <span class="o">${</span><span class="nv">Geant4_LIBRARIES</span><span class="o">}</span><span class="p">)</span>
+
+<span class="c"># Копируем необходимые нам файлы из папки проекта в папку где происходит сборка</span>
+<span class="c"># Для этого мы создаем переменную хранящую один или несколко файлов</span>
+<span class="nb">set</span><span class="p">(</span> <span class="s">GEANT4_SCRIPTS</span> <span class="s">init_vis.mac</span><span class="p">)</span>
+<span class="c"># И с помощью цикла копируем каждый файл</span>
+<span class="nb">foreach</span><span class="p">(</span><span class="s">_script</span> <span class="o">${</span><span class="nv">GEANT4_SCRIPTS</span><span class="o">}</span><span class="p">)</span>
+    <span class="nb">configure_file</span><span class="p">(</span>
+            <span class="o">${</span><span class="nv">PROJECT_SOURCE_DIR</span><span class="o">}</span><span class="s">/</span><span class="o">${</span><span class="nv">_script</span><span class="o">}</span>
+            <span class="o">${</span><span class="nv">PROJECT_BINARY_DIR</span><span class="o">}</span><span class="s">/</span><span class="o">${</span><span class="nv">_script</span><span class="o">}</span>
+            <span class="s">COPYONLY</span>
+    <span class="p">)</span>
+<span class="nb">endforeach</span><span class="p">()</span>
+
+<span class="c"># Описываем поведение для команды make install</span>
+<span class="nb">install</span><span class="p">(</span><span class="s">TARGETS</span> <span class="s">lesson02.exe</span> <span class="s">DESTINATION</span> <span class="s">bin</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2020, Mikhail Zelenyi
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

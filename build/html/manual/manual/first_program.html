@@ -1,0 +1,365 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="ru" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="ru" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>Урок 1: Минимально рабочая программа &mdash; документация geant4-education 0.0.1</title>
+  
+
+  
+  
+  
+  
+
+  
+  <script type="text/javascript" src="../../_static/js/modernizr.min.js"></script>
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../../" src="../../_static/documentation_options.js"></script>
+        <script src="../../_static/jquery.js"></script>
+        <script src="../../_static/underscore.js"></script>
+        <script src="../../_static/doctools.js"></script>
+        <script src="../../_static/language_data.js"></script>
+        <script src="../../_static/translations.js"></script>
+    
+    <script type="text/javascript" src="../../_static/js/theme.js"></script>
+
+    
+
+  
+  <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+    <link rel="index" title="Алфавитный указатель" href="../../genindex.html" />
+    <link rel="search" title="Поиск" href="../../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="../../index.html" class="icon icon-home"> geant4-education
+          
+
+          
+          </a>
+
+          
+            
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <p class="caption"><span class="caption-text">Contents:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../man.html">Базовое руководство по моделированию в GEANT4</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../pi-decay/intro.html">Мастер-класс &quot;Распад пи0-мезона&quot;</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../other/tips.html">Советы и подсказки</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../video.html">Записи вебинаров</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../index.html">geant4-education</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../../index.html">Docs</a> &raquo;</li>
+        
+      <li>Урок 1: Минимально рабочая программа</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+            <a href="../../_sources/manual/manual/first_program.md.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="id1">
+<h1>Урок 1: Минимально рабочая программа<a class="headerlink" href="#id1" title="Ссылка на этот заголовок">¶</a></h1>
+<p>В этом уроке мы попробуем сделать свою первую симуляцию с помощью GEANT4</p>
+<div class="section" id="id2">
+<h2>Схематичное устройсво и основные понятия<a class="headerlink" href="#id2" title="Ссылка на этот заголовок">¶</a></h2>
+<p><strong>Основные понятия</strong>: <em>сеанс</em>, <em>событие</em>, <em>трек</em>, <em>шаг</em>, <em>стек ожидания</em>, <em>элемент</em>, <em>материал</em>, <em>тело</em>, <em>логический объем</em>, <em>физический объем</em>.</p>
+<p>Как же построен процесс моделирования?</p>
+<p>Единицей верхнего уровня является сеанс, который состоит из последовательности событий. События обрабатываются независимо, за исключением тех случаев, когда данные полученные по результатам одного события используются для определения начальных условий следующего события. Событие начинается с генерации первичных частиц, каждой моделируемой частице ставится в соответствие трек. Треки частиц располагаются в стэке ожидания. Треки по очереди берутся из стэка и по шагам разыгрывается распространение частицы. Если в результате движения частицы она рождает вторичные частицы, то они либо помещаются в стэк ожидания, либо могут быть предварительно обработаны пользователем.  Движение частицы по треку происходит по шагам.</p>
+</div>
+<div class="section" id="id3">
+<h2>Соглашение о физических единицах<a class="headerlink" href="#id3" title="Ссылка на этот заголовок">¶</a></h2>
+<p>При вычислениях мы работаем с обезличенными числами, не имеющими размерности. Поэтому вопросы размерности являются предметом договоренности разработчиков программы. В GEANT4 считается, что размерность числовой переменной определяется местом её использования и значение перменной выраженно в одной из единиц измерения принятых по умолчанию. Единицами измерения по умолчанию являются:</p>
+<ul class="simple">
+<li><p>миллиметр,</p></li>
+<li><p>наносекунда,</p></li>
+<li><p>мегаэлектрон-вольт,</p></li>
+<li><p>Кельвин,</p></li>
+<li><p>моль,</p></li>
+<li><p>кандела,</p></li>
+<li><p>радиан,</p></li>
+<li><p>стерадиан.</p></li>
+</ul>
+<p>Все остальные единицы измерения определяются через эти базовые единицы.  Подробности можно узнать в заголовочном файле <code class="docutils literal notranslate"><span class="pre">G4SystemOfUnits.hh</span></code>. При вводе новой физической величины в программу, крайне желательно обозначить её размерность. Ниже приведен пример как это делается.</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1">#include &quot;G4SystemOfUnits.hh&quot;</span>
+<span class="n">using</span> <span class="n">namespace</span> <span class="n">CLHEP</span><span class="p">;</span>
+
+<span class="o">...</span>
+
+<span class="n">double</span> <span class="n">kineticEnergy</span> <span class="o">=</span> <span class="mi">10</span> <span class="o">*</span> <span class="n">MeV</span><span class="p">;</span>
+<span class="n">double</span> <span class="n">size</span> <span class="o">=</span> <span class="mi">1000</span><span class="o">*</span><span class="n">meter</span><span class="p">;</span>
+</pre></div>
+</div>
+<p>В данном пример мы подключили заголовочный файл и пространство имен, в которых определены переменные, позволяющие приводить наши физические величины к базовым размерностям. Так в переменную <code class="docutils literal notranslate"><span class="pre">size</span></code> будет записано значение <code class="docutils literal notranslate"><span class="pre">1000000</span></code>, поскольку переменная <code class="docutils literal notranslate"><span class="pre">meter</span></code> имеет значение <code class="docutils literal notranslate"><span class="pre">1000</span></code>, так как подсказывает капитан Очевидность в метре тысяча миллиметров.</p>
+</div>
+<div class="section" id="id4">
+<h2>Обязательные пользовательские настройки: геометрия, генератор событий и физический лист<a class="headerlink" href="#id4" title="Ссылка на этот заголовок">¶</a></h2>
+<p>Как мы уже сказали GEANT4 это не программа для моделирования, а платформа (фреймворк) для написания программ моделирования. Фактически это устроено следующим образом: в GEANT4 определены абстрактные классы, для которых пользователю нужно самостоятельно реализовать класс-наследник в своей программе. Эти классы позволяют ввести информацию о конкретной части модели, оказать влияние на процесс моделирования или провести регистрацию результатов моделирования.</p>
+<p>Для части абстрактных классов необходимо реализовать класс-наследник в обязательном порядке - это классы отвечающие за описание геометрии модели, генерацию первичных частиц и описание физических процессов. В данном уроке мы создадим простейшую однофайловую программу минимально реализующую все обязательные требования, а в последующих уроках мы рассмотрим каждое обязательное требование более детально (код к данному уроку лежит в <a class="reference external" href="/">директории examples/lesson01</a>).</p>
+<p>Поскольку мы занимаемся Монте-Карло моделированием, то важной частью является генератор случайных чисел:</p>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="cp">#include</span> <span class="cpf">&lt;random&gt;</span><span class="cp"></span>
+
+<span class="p">...</span>
+
+<span class="kt">int</span> <span class="n">main</span><span class="p">()</span> <span class="p">{</span>
+    <span class="p">...</span>
+    <span class="n">random_device</span> <span class="n">rd</span><span class="p">;</span>
+    <span class="n">uniform_int_distribution</span><span class="o">&lt;</span><span class="kt">long</span><span class="o">&gt;</span> <span class="n">uid</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">LONG_MAX</span><span class="p">);</span>
+    <span class="n">G4long</span> <span class="n">seed</span> <span class="o">=</span> <span class="n">uid</span><span class="p">(</span><span class="n">rd</span><span class="p">);</span>
+    <span class="n">G4Random</span><span class="o">::</span><span class="n">setTheEngine</span><span class="p">(</span><span class="k">new</span> <span class="n">CLHEP</span><span class="o">::</span><span class="n">RanecuEngine</span><span class="p">);</span>
+    <span class="n">G4Random</span><span class="o">::</span><span class="n">setTheSeed</span><span class="p">(</span><span class="n">seed</span><span class="p">);</span>
+    <span class="p">...</span>
+</pre></div>
+</div>
+<p>В данной части программы мы выбираем какой из генераторов случайных чисел нам использовать (GEANT4 предлагает несколько на выбор) и устанавливаем его начальное состояние переменной <code class="docutils literal notranslate"><span class="pre">seed</span></code>. Задавать одно и тоже начальное состояние генератора бывает полезно при отладке программы, поскольку оно позволяет повторить псевдослучайную последовательность выдаваемую генератором и тем самым исключить влияние случайности. В рабочих симуляциях напротив, необходимо рандомизировать выбор начального состояния генератора, для этого в данном примере используется класс <code class="docutils literal notranslate"><span class="pre">random_device</span></code> - он позволяет сгенерировать случайное число используя пул энтропии создаваемой шумами в электронике.</p>
+<p>Управление симуляций GEANT4 выполняет с помощью набора так называемых классов-менеджеров (Их можно отличить по наличию в названии класса слова <code class="docutils literal notranslate"><span class="pre">Manager</span></code>), отвечающих  за различные аспекты симуляции и делающих это на разных уровнях. Менеджером верхнего уровня является <code class="docutils literal notranslate"><span class="pre">G4RunManager</span></code>, в с помощью которого мы зарегистрируем созданные пользователем классы и будем управлять запуском <em>сеанса</em> симуляции:</p>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="cp">#include</span> <span class="cpf">&quot;G4RunManager.hh&quot;</span><span class="cp"></span>
+
+<span class="p">...</span>
+
+<span class="kt">int</span> <span class="n">main</span><span class="p">()</span> <span class="p">{</span>
+    <span class="p">...</span>
+    <span class="k">auto</span> <span class="n">runManager</span> <span class="o">=</span> <span class="k">new</span> <span class="n">G4RunManager</span><span class="p">;</span>
+    <span class="p">...</span>
+</pre></div>
+</div>
+<p>Для начала подключим физический лист - объект класса, отвечающего за набор физических процессов, в которых участвуют элементарные частицы в симуляции. В качестве физического листа мы используем один из готовых листов <code class="docutils literal notranslate"><span class="pre">FTFP_BERT</span></code>, который включает в себя набор электромагнитной и адронной физики, обеспечивающий достаточную точность, если ваша симуляция не предпологает каких то сверхточных вычислений или сложных физических моделей (например не рекомендуется данный набор если вы хотите работать с точными симуляциями мягкого рентгена).<br />Характерный прием который используется во многих методах GEANT4 класов — это прием в качесве входного параметра целочисленной переменной (<code class="docutils literal notranslate"><span class="pre">verbose</span></code>) отвечающий за подробность текстового вывода о работе системы (0 соответствует наименее подробному выводу или его отсутствию). Подключение физического листа осущетвляется вызовом метода <code class="docutils literal notranslate"><span class="pre">SetUserInitialization</span></code> и передачей туда объекта физического листа.</p>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="cp">#include</span> <span class="cpf">&quot;FTFP_BERT.hh&quot;</span><span class="cp"></span>
+
+<span class="p">...</span>
+
+<span class="kt">int</span> <span class="n">main</span><span class="p">()</span> <span class="p">{</span>
+    <span class="p">...</span>
+    <span class="n">G4int</span> <span class="n">verbose</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span>
+    <span class="n">FTFP_BERT</span> <span class="o">*</span><span class="n">physlist</span> <span class="o">=</span> <span class="k">new</span> <span class="n">FTFP_BERT</span><span class="p">(</span><span class="n">verbose</span><span class="p">);</span>
+    <span class="n">runManager</span><span class="o">-&gt;</span><span class="n">SetUserInitialization</span><span class="p">(</span><span class="n">physlist</span><span class="p">);</span>
+    <span class="p">...</span>
+</pre></div>
+</div>
+<p>Для геометрического объёма нет стандартных классов, поэтому создадим свой класс, описывающий очень простую ситуацию: кубическое пространство с вакуумом, не содержащее никаких других геометрических объектов.<br />Для этого опишем наш класс <code class="docutils literal notranslate"><span class="pre">DetectorConstruction</span></code>, унаследовав его от <code class="docutils literal notranslate"><span class="pre">G4VUserDetectorConstruction</span></code>, и реализуем в нем вирутальный метод <code class="docutils literal notranslate"><span class="pre">Construct</span></code>. Геометрическая модель GEANT4 пердпологает три уровня абстрации и представляет собой  иерахическую структуру геометрических примитивов, примитив верхнего уровня называется <em>мировым объемом</em> и указатель на этот мировой объем (переменная <code class="docutils literal notranslate"><span class="pre">world</span></code>) должен возращать метод <code class="docutils literal notranslate"><span class="pre">Construct</span></code>.</p>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="cp">#include</span> <span class="cpf">&quot;G4SystemOfUnits.hh&quot;</span><span class="cp"></span>
+<span class="cp">#include</span> <span class="cpf">&quot;G4VUserDetectorConstruction.hh&quot;</span><span class="cp"></span>
+<span class="cp">#include</span> <span class="cpf">&quot;G4NistManager.hh&quot;</span><span class="cp"></span>
+<span class="cp">#include</span> <span class="cpf">&quot;G4Box.hh&quot;</span><span class="cp"></span>
+<span class="cp">#include</span> <span class="cpf">&quot;G4LogicalVolume.hh&quot;</span><span class="cp"></span>
+<span class="cp">#include</span> <span class="cpf">&quot;G4VPhysicalVolume.hh&quot;</span><span class="cp"></span>
+<span class="cp">#include</span> <span class="cpf">&quot;G4PVPlacement.hh&quot;</span><span class="cp"></span>
+
+<span class="k">class</span> <span class="nc">DetectorConstruction</span> <span class="o">:</span> <span class="k">public</span> <span class="n">G4VUserDetectorConstruction</span> <span class="p">{</span>
+<span class="k">public</span><span class="o">:</span>
+    <span class="n">G4VPhysicalVolume</span> <span class="o">*</span><span class="n">Construct</span><span class="p">()</span> <span class="p">{</span>
+        <span class="k">auto</span> <span class="n">nistMngr</span> <span class="o">=</span> <span class="n">G4NistManager</span><span class="o">::</span><span class="n">Instance</span><span class="p">();</span>
+        <span class="k">auto</span> <span class="n">vacuum</span> <span class="o">=</span> <span class="n">nistMngr</span><span class="o">-&gt;</span><span class="n">FindOrBuildMaterial</span><span class="p">(</span><span class="s">&quot;G4_Galactic&quot;</span><span class="p">);</span>
+        <span class="n">G4Box</span> <span class="o">*</span><span class="n">worldSolid</span> <span class="o">=</span> <span class="k">new</span> <span class="n">G4Box</span><span class="p">(</span><span class="s">&quot;world&quot;</span><span class="p">,</span><span class="mi">1000</span><span class="o">*</span><span class="n">meter</span><span class="p">,</span> <span class="mi">1000</span><span class="o">*</span><span class="n">meter</span><span class="p">,</span> <span class="mi">1000</span><span class="o">*</span><span class="n">meter</span><span class="p">);</span>
+        <span class="n">G4LogicalVolume</span> <span class="o">*</span><span class="n">worldLogic</span> <span class="o">=</span> <span class="k">new</span> <span class="n">G4LogicalVolume</span><span class="p">(</span><span class="n">worldSolid</span><span class="p">,</span> <span class="n">vacuum</span><span class="p">,</span> <span class="s">&quot;worldLogic&quot;</span><span class="p">);</span>
+        <span class="n">G4VPhysicalVolume</span> <span class="o">*</span><span class="n">world</span> <span class="o">=</span> <span class="k">new</span> <span class="n">G4PVPlacement</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">G4ThreeVector</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">),</span> <span class="n">worldLogic</span><span class="p">,</span> <span class="s">&quot;WorldPhys&quot;</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="nb">false</span><span class="p">,</span> <span class="mi">0</span><span class="p">);</span>
+        <span class="k">return</span> <span class="n">world</span><span class="p">;</span>
+    <span class="p">}</span>
+<span class="p">};</span>
+</pre></div>
+</div>
+<p>Далее мы должны зарегистрировать наш класс в <code class="docutils literal notranslate"><span class="pre">G4RunManager</span></code>, это делается аналогично регичтрации физического листа:</p>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="cp">#include</span> 
+
+<span class="cpf">...</span><span class="cp"></span>
+
+<span class="kt">int</span> <span class="nf">main</span><span class="p">()</span> <span class="p">{</span>
+    <span class="p">...</span>
+    <span class="k">auto</span> <span class="n">massWorld</span> <span class="o">=</span> <span class="k">new</span> <span class="n">DetectorConstruction</span><span class="p">();</span>
+    <span class="n">runManager</span><span class="o">-&gt;</span><span class="n">SetUserInitialization</span><span class="p">(</span><span class="n">massWorld</span><span class="p">);</span>
+    <span class="p">...</span>
+</pre></div>
+</div>
+<p>Последняя обязательная пользовательская опция - это генератор первичных частиц, в нем определяется какие частицы и с какими параметрами буду смоделированы в начала <em>события</em>.<br />Существует два основых способа генерации первичных частиц: воспользоваться одним из существующих генераторов, настроив его с помощью макросов или описать свой. Последний способ более универсален, но перед тем как прибегать к нему, стоит убедится что вы не можете использовать один из существующих генраторов, благо они поддерживают большое количество опций (в том числе генерацию частиц из пользовательских гистограмм), позволяя избежать ненужной работы. Для нашего примера мы воспользуемся вторым путём и создадим монохромный точечный источник протонов с энергией 3 ГэВ. Для этого создадим класс <code class="docutils literal notranslate"><span class="pre">PrimaryGeneratorAction</span></code> унаследовав его от класса <code class="docutils literal notranslate"><span class="pre">G4VUserPrimaryGeneratorAction</span></code>. В классе создадим поле <code class="docutils literal notranslate"><span class="pre">fParticleGun</span></code>, в котором будем хранить объект описывающий нашу пушку частиц. В конструкторе инициализируем пушку, задав параметры выстреливаемых частиц: тип частицы, энергию, направление импульса, начальное положение, количество частиц в банче. Затем реализуем метод <code class="docutils literal notranslate"><span class="pre">GeneratePrimaries</span></code> отвечающий за создание частицы в начале события. Для генерации первичной частицы, нужно передать объект <em>события</em> в метод <code class="docutils literal notranslate"><span class="pre">GeneratePrimaryVertex</span></code> нашей пушки. Обратим ваше внимание что мы можем менять параметры пушки в этом методе и таким образом генерировать в различных событиях (да и внутри одного тоже) частицы с различными параметрами.</p>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="cp">#include</span> <span class="cpf">&quot;G4SystemOfUnits.hh&quot;</span><span class="cp"></span>
+<span class="cp">#include</span> <span class="cpf">&quot;G4VUserPrimaryGeneratorAction.hh&quot;</span><span class="cp"></span>
+<span class="cp">#include</span> <span class="cpf">&quot;G4ParticleGun.hh&quot;</span><span class="cp"></span>
+
+<span class="k">class</span> <span class="nc">PrimaryGeneratorAction</span> <span class="o">:</span> <span class="k">public</span> <span class="n">G4VUserPrimaryGeneratorAction</span> <span class="p">{</span>
+<span class="k">public</span><span class="o">:</span>
+    <span class="n">G4ParticleGun</span><span class="o">*</span> <span class="n">fParticleGun</span><span class="p">;</span>
+    <span class="n">PrimaryGeneratorAction</span><span class="p">()</span> <span class="o">:</span> <span class="n">G4VUserPrimaryGeneratorAction</span><span class="p">()</span> <span class="p">{</span>
+        <span class="n">G4int</span> <span class="n">nofParticles</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span>
+        <span class="n">fParticleGun</span> <span class="o">=</span> <span class="k">new</span> <span class="n">G4ParticleGun</span><span class="p">(</span><span class="n">nofParticles</span><span class="p">);</span>
+        <span class="c1">// default particle kinematic</span>
+
+        <span class="n">G4ParticleDefinition</span><span class="o">*</span> <span class="n">particleDefinition</span>
+                <span class="o">=</span> <span class="n">G4ParticleTable</span><span class="o">::</span><span class="n">GetParticleTable</span><span class="p">()</span><span class="o">-&gt;</span><span class="n">FindParticle</span><span class="p">(</span><span class="s">&quot;proton&quot;</span><span class="p">);</span>
+
+        <span class="n">fParticleGun</span><span class="o">-&gt;</span><span class="n">SetParticleDefinition</span><span class="p">(</span><span class="n">particleDefinition</span><span class="p">);</span>
+        <span class="n">fParticleGun</span><span class="o">-&gt;</span><span class="n">SetParticleMomentumDirection</span><span class="p">(</span><span class="n">G4ThreeVector</span><span class="p">(</span><span class="mf">0.</span><span class="p">,</span><span class="mf">0.</span><span class="p">,</span><span class="mf">1.</span><span class="p">));</span>
+        <span class="n">fParticleGun</span><span class="o">-&gt;</span><span class="n">SetParticleEnergy</span><span class="p">(</span><span class="mf">3.0</span><span class="o">*</span><span class="n">GeV</span><span class="p">);</span>
+        <span class="n">fParticleGun</span><span class="o">-&gt;</span><span class="n">SetParticlePosition</span><span class="p">(</span><span class="n">G4ThreeVector</span><span class="p">(</span><span class="mf">0.</span><span class="p">,</span> <span class="mf">0.</span><span class="p">,</span> <span class="mf">0.</span><span class="p">));</span>
+    <span class="p">}</span>
+
+    <span class="kt">void</span> <span class="n">GeneratePrimaries</span><span class="p">(</span><span class="n">G4Event</span> <span class="o">*</span><span class="n">anEvent</span><span class="p">)</span> <span class="k">override</span> <span class="p">{</span>
+        <span class="n">fParticleGun</span><span class="o">-&gt;</span><span class="n">GeneratePrimaryVertex</span><span class="p">(</span><span class="n">anEvent</span><span class="p">);</span>
+        <span class="n">fParticleGun</span><span class="o">-&gt;</span><span class="n">SetParticleEnergy</span><span class="p">(</span><span class="mi">2</span><span class="o">*</span><span class="n">GeV</span><span class="p">);</span>
+        <span class="n">fParticleGun</span><span class="o">-&gt;</span><span class="n">GeneratePrimaryVertex</span><span class="p">(</span><span class="n">anEvent</span><span class="p">);</span>
+    <span class="p">}</span>
+
+<span class="p">};</span>
+</pre></div>
+</div>
+<p>В отличии от геометрии и физического листа зарегистрировать пушку можно двумя путями: через специальный класс-наследник класса <code class="docutils literal notranslate"><span class="pre">G4VUserActionInitialization</span></code> или же не посредственно через вызов метода <code class="docutils literal notranslate"><span class="pre">SetUserAction</span></code>. Для простоты мы воспользуемся вторым способ, хотя более правилен первый метод.</p>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="cp">#include</span> 
+
+<span class="cpf">...</span><span class="cp"></span>
+
+<span class="kt">int</span> <span class="nf">main</span><span class="p">()</span> <span class="p">{</span>
+    <span class="p">...</span>
+    <span class="k">auto</span> <span class="n">gun</span> <span class="o">=</span> <span class="k">new</span> <span class="n">PrimaryGeneratorAction</span><span class="p">();</span>
+    <span class="n">runManager</span><span class="o">-&gt;</span><span class="n">SetUserAction</span><span class="p">(</span><span class="n">gun</span><span class="p">);</span>
+    <span class="p">...</span>
+</pre></div>
+</div>
+<p>Отлично мы зарегистрировали все обязательные методы. Обращаю внимание что мы их только зарегистрировали — подробнее этот факт и следствия из него мы обсудим в одном из следующих занятий.</p>
+<p>Для начала симуляции нужно явно провести инициализацию вызвав метод <code class="docutils literal notranslate"><span class="pre">Initialize</span></code>, после чего можно запустить <em>сеанс</em> вызвав метод <code class="docutils literal notranslate"><span class="pre">BeamOn</span></code>, который в качестве аргумента принимает количесвто <em>событий</em> в сеансе</p>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="cp">#include</span> 
+
+<span class="cpf">...</span><span class="cp"></span>
+
+<span class="kt">int</span> <span class="nf">main</span><span class="p">()</span> <span class="p">{</span>
+    <span class="p">...</span>
+    <span class="n">runManager</span><span class="o">-&gt;</span><span class="n">Initialize</span><span class="p">();</span>
+    <span class="n">runManager</span><span class="o">-&gt;</span><span class="n">BeamOn</span><span class="p">(</span><span class="mi">10</span><span class="p">);</span>
+    <span class="p">...</span>
+</pre></div>
+</div>
+<p>Отлично мы написали простую программу с симуляцией, можно было бы на этом закончить, если бы не одно но – мало написать программу, нужно её скомпилировать и запустить. Поскольку нам нужно не только скомпилировать программу но еще и линковать её с GEANT4 делать это вручную требует дополнительных усилий. По сей причине для компиляции  и линковки программы используют так называемые системы сборки. С одной из них — `cmake` мы уже   немного познакомились, когда устанавливали geant4 и запускали тестовый пример.  Её же мы и будем использовать в дальнейшем.</p>
+<p>Скомпилируем код из урока, действуя аналогичным образом как при запуске примера. Более подродно об управлении симуляцией и настройке `cmake` мы поговорим в следующем уроке.</p>
+</div>
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2020, Mikhail Zelenyi
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

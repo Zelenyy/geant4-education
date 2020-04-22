@@ -7,7 +7,7 @@ Welcome to geant4-education's documentation!
 ============================================
 
 .. toctree::
-   :maxdepth: 3
+   :maxdepth: 1
    :caption: Contents:
 
    Мастер-класс "Распад пи0-мезона" <pi-decay/intro>

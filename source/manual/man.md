@@ -6,8 +6,8 @@
 
 * [Введение](introduction.md)
 * [Установка](installation.md)
-* [Урок 1: Минимально рабочая программа](first_programm.md)
-* [Урок 2: Проект](cmake_project_.md)
+* [Урок 1: Минимально рабочая программа](first_program.md)
+* [Урок 2: Проект](cmake_project.md)
 * [Урок 3: Управление сеансом]()
 * [Урок 4: Генератор первичных частиц](primary_generator.md)
 * [Урок 5: Базовая геометрия](basic_geometry.md)

@@ -89,5 +89,168 @@ int main(int argc, char** argv)
 }
 ```
 Пересоберите проект и запустите исполняемый файл, что бы убедится что вы все сделали правильно.
- 
 
+## Подключаем дополнительные файлы и создаем заготовку для моделирования
+Пока мы создали проект состоящий только из одного файла с кодом, однако в реальности код проект распределяется по нескольким файлам, которые отвечают за какую отдельную часть проекта. Например, для того чтобы начать симуляцию в GEANT4 пользователь обязан самостоятельно описать геометрию своего эксперимента, задать генератор первичных событий и выбрать используемую физику. Давайте создадим заготовку содержащие отдельные файлы для геометрии и генератора первичных частиц и подключим их к нашему проекту. 
+
+Для начала создадим две директории: `include` в которой мы будем размещать заголовочные файлы и `src` в которомы мы будем размешать файлы с реализацией.
+
+В директорию `include` мы поместим файлы `DetectorConstruction.hh`  и `PrimaryGeneratorAction.hh` со следующим содержанием (его суть мы разберем в следующих главах).
+
+`DetectorConstruction.hh`:
+
+```cpp
+#ifndef PI_DECAY_DETECTORCONSTRUCTION_HH
+#define PI_DECAY_DETECTORCONSTRUCTION_HH
+
+#include <G4VUserDetectorConstruction.hh>
+
+class DetectorConstruction : public G4VUserDetectorConstruction{
+public:
+    G4VPhysicalVolume *Construct() override;
+
+};
+
+#endif //PI_DECAY_DETECTORCONSTRUCTION_HH
+```
+
+`PrimaryGeneratorAction.hh`:
+
+```cpp
+#ifndef PI_DECAY_PRIMARYGENERATORACTION_HH
+#define PI_DECAY_PRIMARYGENERATORACTION_HH
+
+#include <G4VUserPrimaryGeneratorAction.hh>
+#include <G4ParticleGun.hh>
+
+class PrimaryGeneratorAction : public G4VUserPrimaryGeneratorAction{
+public:
+    PrimaryGeneratorAction();
+    void GeneratePrimaries(G4Event *anEvent) override;
+private:
+    G4GeneralParticleSource *particleSource;
+};
+
+#endif //PI_DECAY_PRIMARYGENERATORACTION_HH
+```
+
+А в директории `src` поместим файлы `DetectorConstruction.cc` и `PrimaryGeneratorAction.cc`:
+
+ `DetectorConstruction.cc`:
+ ```cpp
+ #include <G4NistManager.hh>
+#include <G4Box.hh>
+#include <G4PVPlacement.hh>
+#include "G4LogicalVolume.hh"
+#include "DetectorConstruction.hh"
+#include "G4SystemOfUnits.hh"
+
+G4VPhysicalVolume *DetectorConstruction::Construct() {
+    // Get nist material manager
+    auto nist = G4NistManager::Instance();
+
+    // Option to switch on/off checking of volumes overlaps
+    G4bool checkOverlaps = true;
+
+    //
+    // World
+    //
+    G4double world_sizeXY = 20*meter;
+    G4double world_sizeZ  = 30*meter;
+    G4Material* world_mat = nist->FindOrBuildMaterial("G4_AIR");
+
+    G4Box* solidWorld =
+            new G4Box("World",                       //its name
+                      0.5*world_sizeXY, 0.5*world_sizeXY, 0.5*world_sizeZ);     //its size
+
+    G4LogicalVolume* logicWorld =
+            new G4LogicalVolume(solidWorld,          //its solid
+                                world_mat,           //its material
+                                "World");            //its name
+
+    G4VPhysicalVolume* physWorld =
+            new G4PVPlacement(0,                     //no rotation
+                              G4ThreeVector(),       //at (0,0,0)
+                              logicWorld,            //its logical volume
+                              "World",               //its name
+                              0,                     //its mother  volume
+                              false,                 //no boolean operation
+                              0,                     //copy number
+                              checkOverlaps);        //overlaps checking
+    return physWorld;
+}
+```
+
+`PrimaryGeneratorAction.cc`:
+```cpp
+#include "PrimaryGeneratorAction.hh"
+
+void PrimaryGeneratorAction::GeneratePrimaries(G4Event *anEvent) {
+    particleSource->GeneratePrimaryVertex(anEvent);
+}
+
+PrimaryGeneratorAction::PrimaryGeneratorAction()
+        : G4VUserPrimaryGeneratorAction(){
+    particleSource = new G4GeneralParticleSource();
+}
+```
+Отредактируем файл `main.cc`, чтобы использовать эти новые файлы:
+```cpp
+#include <DetectorConstruction.hh>
+#include <PrimaryGeneratorAction.hh>
+#include <QGSP_BERT.hh>
+#include <G4VisManager.hh>
+#include <G4VisExecutive.hh>
+#include <G4UIExecutive.hh>
+#include <G4UImanager.hh>
+#include "G4RunManager.hh"
+
+int main(int argc, char **argv) {
+    G4UIExecutive *ui = nullptr;
+    if (argc == 1) {
+        ui = new G4UIExecutive(argc, argv);
+    }
+    G4RunManager *runManager = new G4RunManager;
+    runManager->SetUserInitialization(new DetectorConstruction());
+    runManager->SetUserInitialization(new QGSP_BERT);
+    runManager->SetUserAction(new PrimaryGeneratorAction());
+    runManager->Initialize();
+
+    G4VisManager *visManager = new G4VisExecutive;
+    visManager->Initialize();
+
+    // Get the pointer to the User Interface manager
+    G4UImanager *UImanager = G4UImanager::GetUIpointer();
+
+    // Process macro or start UI session
+    //
+    if (!ui) {
+        // batch mode
+        G4String command = "/control/execute ";
+        G4String fileName = argv[1];
+        UImanager->ApplyCommand(command + fileName);
+    } else {
+        // interactive mode
+        UImanager->ApplyCommand("/control/execute init_vis.mac");
+        ui->SessionStart();
+        delete ui;
+    }
+
+    delete visManager;
+    delete runManager;
+}
+```
+
+
+Теперь давайте подключим эти файлы к нашему проекту?, добавив эти строчки в файл `CMakeLists.txt`:
+```cmake
+include_directories(${PROJECT_SOURCE_DIR}/include)
+file(GLOB sources ${PROJECT_SOURCE_DIR}/src/*.cc)
+```
+Давайте разберем что они делают:
+
+* `include_directories(${PROJECT_SOURCE_DIR}/include)` --- подключает заголовочные файлы из указанной директории, `${PROJECT_SOURCE_DIR}` это перменная указывающая путь к корневой директории проекта.
+* `file(GLOB sources ${PROJECT_SOURCE_DIR}/src/*.cc)` --- создает переменную `sources`, которая содержит список файлов соответвующих заданной маске `${PROJECT_SOURCE_DIR}/src/*.cc`. 
+
+Теперь изменим команду `add_executable(pi-decay main.cc` на 
+`add_executable(pi-decay main.cc ${sources})`, для того чтобы добавить файлы из списка `sources` как нашему исполняемому файлу. Скомпиируйте проект, что бы убедится что вы правильно все подключили.

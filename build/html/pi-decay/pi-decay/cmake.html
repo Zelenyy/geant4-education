@@ -88,6 +88,7 @@
 <li class="toctree-l3"><a class="reference internal" href="#hello-world">Hello world</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#geant4">Установка GEANT4</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#id1">Подключение GEANT4 к нашему проекту</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#id2">Подключаем дополнительные файлы и создаем заготовку для моделирования</a></li>
 </ul>
 </li>
 </ul>
@@ -249,6 +250,161 @@
 </pre></div>
 </div>
 <p>Пересоберите проект и запустите исполняемый файл, что бы убедится что вы все сделали правильно.</p>
+</div>
+<div class="section" id="id2">
+<h2>Подключаем дополнительные файлы и создаем заготовку для моделирования<a class="headerlink" href="#id2" title="Ссылка на этот заголовок">¶</a></h2>
+<p>Пока мы создали проект состоящий только из одного файла с кодом, однако в реальности код проект распределяется по нескольким файлам, которые отвечают за какую отдельную часть проекта. Например, для того чтобы начать симуляцию в GEANT4 пользователь обязан самостоятельно описать геометрию своего эксперимента, задать генератор первичных событий и выбрать используемую физику. Давайте создадим заготовку содержащие отдельные файлы для геометрии и генератора первичных частиц и подключим их к нашему проекту.</p>
+<p>Для начала создадим две директории: <code class="docutils literal notranslate"><span class="pre">include</span></code> в которой мы будем размещать заголовочные файлы и <code class="docutils literal notranslate"><span class="pre">src</span></code> в которомы мы будем размешать файлы с реализацией.</p>
+<p>В директорию <code class="docutils literal notranslate"><span class="pre">include</span></code> мы поместим файлы <code class="docutils literal notranslate"><span class="pre">DetectorConstruction.hh</span></code>  и <code class="docutils literal notranslate"><span class="pre">PrimaryGeneratorAction.hh</span></code> со следующим содержанием (его суть мы разберем в следующих главах).</p>
+<p><code class="docutils literal notranslate"><span class="pre">DetectorConstruction.hh</span></code>:</p>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="cp">#ifndef PI_DECAY_DETECTORCONSTRUCTION_HH</span>
+<span class="cp">#define PI_DECAY_DETECTORCONSTRUCTION_HH</span>
+
+<span class="cp">#include</span> <span class="cpf">&lt;G4VUserDetectorConstruction.hh&gt;</span><span class="cp"></span>
+
+<span class="k">class</span> <span class="nc">DetectorConstruction</span> <span class="o">:</span> <span class="k">public</span> <span class="n">G4VUserDetectorConstruction</span><span class="p">{</span>
+<span class="k">public</span><span class="o">:</span>
+    <span class="n">G4VPhysicalVolume</span> <span class="o">*</span><span class="n">Construct</span><span class="p">()</span> <span class="k">override</span><span class="p">;</span>
+
+<span class="p">};</span>
+
+<span class="cp">#endif </span><span class="c1">//PI_DECAY_DETECTORCONSTRUCTION_HH</span>
+</pre></div>
+</div>
+<p><code class="docutils literal notranslate"><span class="pre">PrimaryGeneratorAction.hh</span></code>:</p>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="cp">#ifndef PI_DECAY_PRIMARYGENERATORACTION_HH</span>
+<span class="cp">#define PI_DECAY_PRIMARYGENERATORACTION_HH</span>
+
+<span class="cp">#include</span> <span class="cpf">&lt;G4VUserPrimaryGeneratorAction.hh&gt;</span><span class="cp"></span>
+<span class="cp">#include</span> <span class="cpf">&lt;G4ParticleGun.hh&gt;</span><span class="cp"></span>
+
+<span class="k">class</span> <span class="nc">PrimaryGeneratorAction</span> <span class="o">:</span> <span class="k">public</span> <span class="n">G4VUserPrimaryGeneratorAction</span><span class="p">{</span>
+<span class="k">public</span><span class="o">:</span>
+    <span class="n">PrimaryGeneratorAction</span><span class="p">();</span>
+    <span class="kt">void</span> <span class="nf">GeneratePrimaries</span><span class="p">(</span><span class="n">G4Event</span> <span class="o">*</span><span class="n">anEvent</span><span class="p">)</span> <span class="k">override</span><span class="p">;</span>
+<span class="k">private</span><span class="o">:</span>
+    <span class="n">G4GeneralParticleSource</span> <span class="o">*</span><span class="n">particleSource</span><span class="p">;</span>
+<span class="p">};</span>
+
+<span class="cp">#endif </span><span class="c1">//PI_DECAY_PRIMARYGENERATORACTION_HH</span>
+</pre></div>
+</div>
+<p>А в директории <code class="docutils literal notranslate"><span class="pre">src</span></code> поместим файлы <code class="docutils literal notranslate"><span class="pre">DetectorConstruction.cc</span></code> и <code class="docutils literal notranslate"><span class="pre">PrimaryGeneratorAction.cc</span></code>:</p>
+<p><code class="docutils literal notranslate"><span class="pre">DetectorConstruction.cc</span></code>:</p>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="cp">#include</span> <span class="cpf">&lt;G4NistManager.hh&gt;</span><span class="cp"></span>
+<span class="cp">#include</span> <span class="cpf">&lt;G4Box.hh&gt;</span><span class="cp"></span>
+<span class="cp">#include</span> <span class="cpf">&lt;G4PVPlacement.hh&gt;</span><span class="cp"></span>
+<span class="cp">#include</span> <span class="cpf">&quot;G4LogicalVolume.hh&quot;</span><span class="cp"></span>
+<span class="cp">#include</span> <span class="cpf">&quot;DetectorConstruction.hh&quot;</span><span class="cp"></span>
+<span class="cp">#include</span> <span class="cpf">&quot;G4SystemOfUnits.hh&quot;</span><span class="cp"></span>
+
+<span class="n">G4VPhysicalVolume</span> <span class="o">*</span><span class="n">DetectorConstruction</span><span class="o">::</span><span class="n">Construct</span><span class="p">()</span> <span class="p">{</span>
+   <span class="c1">// Get nist material manager</span>
+   <span class="k">auto</span> <span class="n">nist</span> <span class="o">=</span> <span class="n">G4NistManager</span><span class="o">::</span><span class="n">Instance</span><span class="p">();</span>
+
+   <span class="c1">// Option to switch on/off checking of volumes overlaps</span>
+   <span class="n">G4bool</span> <span class="n">checkOverlaps</span> <span class="o">=</span> <span class="nb">true</span><span class="p">;</span>
+
+   <span class="c1">//</span>
+   <span class="c1">// World</span>
+   <span class="c1">//</span>
+   <span class="n">G4double</span> <span class="n">world_sizeXY</span> <span class="o">=</span> <span class="mi">20</span><span class="o">*</span><span class="n">meter</span><span class="p">;</span>
+   <span class="n">G4double</span> <span class="n">world_sizeZ</span>  <span class="o">=</span> <span class="mi">30</span><span class="o">*</span><span class="n">meter</span><span class="p">;</span>
+   <span class="n">G4Material</span><span class="o">*</span> <span class="n">world_mat</span> <span class="o">=</span> <span class="n">nist</span><span class="o">-&gt;</span><span class="n">FindOrBuildMaterial</span><span class="p">(</span><span class="s">&quot;G4_AIR&quot;</span><span class="p">);</span>
+
+   <span class="n">G4Box</span><span class="o">*</span> <span class="n">solidWorld</span> <span class="o">=</span>
+           <span class="k">new</span> <span class="n">G4Box</span><span class="p">(</span><span class="s">&quot;World&quot;</span><span class="p">,</span>                       <span class="c1">//its name</span>
+                     <span class="mf">0.5</span><span class="o">*</span><span class="n">world_sizeXY</span><span class="p">,</span> <span class="mf">0.5</span><span class="o">*</span><span class="n">world_sizeXY</span><span class="p">,</span> <span class="mf">0.5</span><span class="o">*</span><span class="n">world_sizeZ</span><span class="p">);</span>     <span class="c1">//its size</span>
+
+   <span class="n">G4LogicalVolume</span><span class="o">*</span> <span class="n">logicWorld</span> <span class="o">=</span>
+           <span class="k">new</span> <span class="n">G4LogicalVolume</span><span class="p">(</span><span class="n">solidWorld</span><span class="p">,</span>          <span class="c1">//its solid</span>
+                               <span class="n">world_mat</span><span class="p">,</span>           <span class="c1">//its material</span>
+                               <span class="s">&quot;World&quot;</span><span class="p">);</span>            <span class="c1">//its name</span>
+
+   <span class="n">G4VPhysicalVolume</span><span class="o">*</span> <span class="n">physWorld</span> <span class="o">=</span>
+           <span class="k">new</span> <span class="n">G4PVPlacement</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span>                     <span class="c1">//no rotation</span>
+                             <span class="n">G4ThreeVector</span><span class="p">(),</span>       <span class="c1">//at (0,0,0)</span>
+                             <span class="n">logicWorld</span><span class="p">,</span>            <span class="c1">//its logical volume</span>
+                             <span class="s">&quot;World&quot;</span><span class="p">,</span>               <span class="c1">//its name</span>
+                             <span class="mi">0</span><span class="p">,</span>                     <span class="c1">//its mother  volume</span>
+                             <span class="nb">false</span><span class="p">,</span>                 <span class="c1">//no boolean operation</span>
+                             <span class="mi">0</span><span class="p">,</span>                     <span class="c1">//copy number</span>
+                             <span class="n">checkOverlaps</span><span class="p">);</span>        <span class="c1">//overlaps checking</span>
+   <span class="k">return</span> <span class="n">physWorld</span><span class="p">;</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<p><code class="docutils literal notranslate"><span class="pre">PrimaryGeneratorAction.cc</span></code>:</p>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="cp">#include</span> <span class="cpf">&quot;PrimaryGeneratorAction.hh&quot;</span><span class="cp"></span>
+
+<span class="kt">void</span> <span class="n">PrimaryGeneratorAction</span><span class="o">::</span><span class="n">GeneratePrimaries</span><span class="p">(</span><span class="n">G4Event</span> <span class="o">*</span><span class="n">anEvent</span><span class="p">)</span> <span class="p">{</span>
+    <span class="n">particleSource</span><span class="o">-&gt;</span><span class="n">GeneratePrimaryVertex</span><span class="p">(</span><span class="n">anEvent</span><span class="p">);</span>
+<span class="p">}</span>
+
+<span class="n">PrimaryGeneratorAction</span><span class="o">::</span><span class="n">PrimaryGeneratorAction</span><span class="p">()</span>
+        <span class="o">:</span> <span class="n">G4VUserPrimaryGeneratorAction</span><span class="p">(){</span>
+    <span class="n">particleSource</span> <span class="o">=</span> <span class="k">new</span> <span class="n">G4GeneralParticleSource</span><span class="p">();</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<p>Отредактируем файл <code class="docutils literal notranslate"><span class="pre">main.cc</span></code>, чтобы использовать эти новые файлы:</p>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="cp">#include</span> <span class="cpf">&lt;DetectorConstruction.hh&gt;</span><span class="cp"></span>
+<span class="cp">#include</span> <span class="cpf">&lt;PrimaryGeneratorAction.hh&gt;</span><span class="cp"></span>
+<span class="cp">#include</span> <span class="cpf">&lt;QGSP_BERT.hh&gt;</span><span class="cp"></span>
+<span class="cp">#include</span> <span class="cpf">&lt;G4VisManager.hh&gt;</span><span class="cp"></span>
+<span class="cp">#include</span> <span class="cpf">&lt;G4VisExecutive.hh&gt;</span><span class="cp"></span>
+<span class="cp">#include</span> <span class="cpf">&lt;G4UIExecutive.hh&gt;</span><span class="cp"></span>
+<span class="cp">#include</span> <span class="cpf">&lt;G4UImanager.hh&gt;</span><span class="cp"></span>
+<span class="cp">#include</span> <span class="cpf">&quot;G4RunManager.hh&quot;</span><span class="cp"></span>
+
+<span class="kt">int</span> <span class="nf">main</span><span class="p">(</span><span class="kt">int</span> <span class="n">argc</span><span class="p">,</span> <span class="kt">char</span> <span class="o">**</span><span class="n">argv</span><span class="p">)</span> <span class="p">{</span>
+    <span class="n">G4UIExecutive</span> <span class="o">*</span><span class="n">ui</span> <span class="o">=</span> <span class="k">nullptr</span><span class="p">;</span>
+    <span class="k">if</span> <span class="p">(</span><span class="n">argc</span> <span class="o">==</span> <span class="mi">1</span><span class="p">)</span> <span class="p">{</span>
+        <span class="n">ui</span> <span class="o">=</span> <span class="k">new</span> <span class="n">G4UIExecutive</span><span class="p">(</span><span class="n">argc</span><span class="p">,</span> <span class="n">argv</span><span class="p">);</span>
+    <span class="p">}</span>
+    <span class="n">G4RunManager</span> <span class="o">*</span><span class="n">runManager</span> <span class="o">=</span> <span class="k">new</span> <span class="n">G4RunManager</span><span class="p">;</span>
+    <span class="n">runManager</span><span class="o">-&gt;</span><span class="n">SetUserInitialization</span><span class="p">(</span><span class="k">new</span> <span class="n">DetectorConstruction</span><span class="p">());</span>
+    <span class="n">runManager</span><span class="o">-&gt;</span><span class="n">SetUserInitialization</span><span class="p">(</span><span class="k">new</span> <span class="n">QGSP_BERT</span><span class="p">);</span>
+    <span class="n">runManager</span><span class="o">-&gt;</span><span class="n">SetUserAction</span><span class="p">(</span><span class="k">new</span> <span class="n">PrimaryGeneratorAction</span><span class="p">());</span>
+    <span class="n">runManager</span><span class="o">-&gt;</span><span class="n">Initialize</span><span class="p">();</span>
+
+    <span class="n">G4VisManager</span> <span class="o">*</span><span class="n">visManager</span> <span class="o">=</span> <span class="k">new</span> <span class="n">G4VisExecutive</span><span class="p">;</span>
+    <span class="n">visManager</span><span class="o">-&gt;</span><span class="n">Initialize</span><span class="p">();</span>
+
+    <span class="c1">// Get the pointer to the User Interface manager</span>
+    <span class="n">G4UImanager</span> <span class="o">*</span><span class="n">UImanager</span> <span class="o">=</span> <span class="n">G4UImanager</span><span class="o">::</span><span class="n">GetUIpointer</span><span class="p">();</span>
+
+    <span class="c1">// Process macro or start UI session</span>
+    <span class="c1">//</span>
+    <span class="k">if</span> <span class="p">(</span><span class="o">!</span><span class="n">ui</span><span class="p">)</span> <span class="p">{</span>
+        <span class="c1">// batch mode</span>
+        <span class="n">G4String</span> <span class="n">command</span> <span class="o">=</span> <span class="s">&quot;/control/execute &quot;</span><span class="p">;</span>
+        <span class="n">G4String</span> <span class="n">fileName</span> <span class="o">=</span> <span class="n">argv</span><span class="p">[</span><span class="mi">1</span><span class="p">];</span>
+        <span class="n">UImanager</span><span class="o">-&gt;</span><span class="n">ApplyCommand</span><span class="p">(</span><span class="n">command</span> <span class="o">+</span> <span class="n">fileName</span><span class="p">);</span>
+    <span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
+        <span class="c1">// interactive mode</span>
+        <span class="n">UImanager</span><span class="o">-&gt;</span><span class="n">ApplyCommand</span><span class="p">(</span><span class="s">&quot;/control/execute init_vis.mac&quot;</span><span class="p">);</span>
+        <span class="n">ui</span><span class="o">-&gt;</span><span class="n">SessionStart</span><span class="p">();</span>
+        <span class="k">delete</span> <span class="n">ui</span><span class="p">;</span>
+    <span class="p">}</span>
+
+    <span class="k">delete</span> <span class="n">visManager</span><span class="p">;</span>
+    <span class="k">delete</span> <span class="n">runManager</span><span class="p">;</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<p>Теперь давайте подключим эти файлы к нашему проекту?, добавив эти строчки в файл <code class="docutils literal notranslate"><span class="pre">CMakeLists.txt</span></code>:</p>
+<div class="highlight-cmake notranslate"><div class="highlight"><pre><span></span><span class="nb">include_directories</span><span class="p">(</span><span class="o">${</span><span class="nv">PROJECT_SOURCE_DIR</span><span class="o">}</span><span class="s">/include</span><span class="p">)</span>
+<span class="nb">file</span><span class="p">(</span><span class="s">GLOB</span> <span class="s">sources</span> <span class="o">${</span><span class="nv">PROJECT_SOURCE_DIR</span><span class="o">}</span><span class="s">/src/*.cc</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>Давайте разберем что они делают:</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">include_directories(${PROJECT_SOURCE_DIR}/include)</span></code> — подключает заголовочные файлы из указанной директории, <code class="docutils literal notranslate"><span class="pre">${PROJECT_SOURCE_DIR}</span></code> это перменная указывающая путь к корневой директории проекта.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">file(GLOB</span> <span class="pre">sources</span> <span class="pre">${PROJECT_SOURCE_DIR}/src/*.cc)</span></code> — создает переменную <code class="docutils literal notranslate"><span class="pre">sources</span></code>, которая содержит список файлов соответвующих заданной маске <code class="docutils literal notranslate"><span class="pre">${PROJECT_SOURCE_DIR}/src/*.cc</span></code>.</p></li>
+</ul>
+<p>Теперь изменим команду <code class="docutils literal notranslate"><span class="pre">add_executable(pi-decay</span> <span class="pre">main.cc</span></code> на
+<code class="docutils literal notranslate"><span class="pre">add_executable(pi-decay</span> <span class="pre">main.cc</span> <span class="pre">${sources})</span></code>, для того чтобы добавить файлы из списка <code class="docutils literal notranslate"><span class="pre">sources</span></code> как нашему исполняемому файлу. Скомпиируйте проект, что бы убедится что вы правильно все подключили.</p>
 </div>
 </div>
 

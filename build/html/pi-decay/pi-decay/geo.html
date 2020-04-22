@@ -1,0 +1,347 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="ru" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="ru" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>Геометрия GEANT4 &mdash; документация geant4-education 0.0.1</title>
+  
+
+  
+  
+  
+  
+
+  
+  <script type="text/javascript" src="../../_static/js/modernizr.min.js"></script>
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../../" src="../../_static/documentation_options.js"></script>
+        <script src="../../_static/jquery.js"></script>
+        <script src="../../_static/underscore.js"></script>
+        <script src="../../_static/doctools.js"></script>
+        <script src="../../_static/language_data.js"></script>
+        <script src="../../_static/translations.js"></script>
+    
+    <script type="text/javascript" src="../../_static/js/theme.js"></script>
+
+    
+
+  
+  <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+    <link rel="index" title="Алфавитный указатель" href="../../genindex.html" />
+    <link rel="search" title="Поиск" href="../../search.html" />
+    <link rel="next" title="Генерация первичной частицы" href="gen.html" />
+    <link rel="prev" title="Сборка проекта при помощи cmake" href="cmake.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="../../index.html" class="icon icon-home"> geant4-education
+          
+
+          
+          </a>
+
+          
+            
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <p class="caption"><span class="caption-text">Contents:</span></p>
+<ul class="current">
+<li class="toctree-l1 current"><a class="reference internal" href="../intro.html">Мастер-класс &quot;Распад пи0-мезона&quot;</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="cmake.html">Как собрать с++ проект используя cmake, как установить GEANT4 и как подключить его к вашему проекту</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">Как описывать геометрию эксперимента, визуализировать её и управлять визуализацией</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#id1">Базовые принцы и создание мирового объема</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#id2">Запуск визуализации</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#id3">Планируем структуру геометрии</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#id4">Создаем калориметер</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#id5">Раскрашиваем калориметр</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#id6">Создаем трековый детектор</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#id7">Вращение физических объемов</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#id8">Создаем магнитное поле</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="gen.html">Как генерировать первичные частицы, использовать встроенные генераторы и таблицы распадов</a></li>
+<li class="toctree-l2"><a class="reference internal" href="mes.html">Как управлять параметрами симуляции</a></li>
+<li class="toctree-l2"><a class="reference internal" href="sd.html">Как моделировать работу детектора</a></li>
+<li class="toctree-l2"><a class="reference internal" href="input.html">Как выводить результаты моделирования в ROOT и HDF файлы</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../video.html">Записи вебинаров</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../index.html">geant4-education</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../../index.html">Docs</a> &raquo;</li>
+        
+          <li><a href="../intro.html">Введение</a> &raquo;</li>
+        
+      <li>Геометрия GEANT4</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+            <a href="../../_sources/pi-decay/pi-decay/geo.md.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="geant4">
+<h1>Геометрия GEANT4<a class="headerlink" href="#geant4" title="Ссылка на этот заголовок">¶</a></h1>
+<div class="section" id="id1">
+<h2>Базовые принцы и создание мирового объема<a class="headerlink" href="#id1" title="Ссылка на этот заголовок">¶</a></h2>
+<p>В предыдущей главе мы создали файлы <code class="docutils literal notranslate"><span class="pre">DetectorConstruction.hh</span></code> и <code class="docutils literal notranslate"><span class="pre">DetectorConstruction.cc</span></code>, теперь давайте разберемся что в них происходит. ДЛя того что бы задать геометрию в GEANT4, нужно унаследовать класс <code class="docutils literal notranslate"><span class="pre">G4VUserDetectorConstruction</span></code> и определить в нём метод <code class="docutils literal notranslate"><span class="pre">Construct</span></code>. Это и происходит в нашем классе <code class="docutils literal notranslate"><span class="pre">DetectorConstruction</span></code>. Геометрическая модель GEANT4 пердпологает три уровня абстрации и представляет собой иерахическую структуру геометрических примитивов, примитив верхнего уровня называется <em>мировым объемом</em> и указатель на этот мировой объем должен возращать метод <code class="docutils literal notranslate"><span class="pre">Construct</span></code>. Расмотрим с каким геометрическими абстракциями работает GEANT4:</p>
+<ol class="simple">
+<li><p><em>Тело</em> (<em>solid</em>) — описывает форму и размеры реального геометрического объема.</p></li>
+<li><p><em>Логический объем</em> (<em>logical volume</em>)— описывает материал, электромагние и прочие поля, а также содержит информацию об используемомо твердом теле и детекторе для данного объема.</p></li>
+<li><p><em>Физический объем</em> (<em>physical volume</em>) — имменно через этот объем будут проходить частицы двигаясь в нашей гемеотрической модели.  Здесь задаются координаты центра тела и его поворот относительно системы координат связанное с центром материнсокго логического объема.</p></li>
+</ol>
+<p>Расмотрим детальнее метод <code class="docutils literal notranslate"><span class="pre">Construct</span></code>.</p>
+<p>Для начала мы создадим тело нешего мира в виде прямоугольного параллепипеда. Обратите внимание что в классы отвечающих за создание тел, нужно указывать половины от линейных размеров, в частости здесь мы передаем полуширину параллепидеда и не полную ширину. Также каждое тело (также как и логические и физические объемы) имеет имя, которое используется для работы пользователя с геометрией:</p>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="n">G4double</span> <span class="n">world_sizeXY</span> <span class="o">=</span> <span class="mi">20</span><span class="o">*</span><span class="n">meter</span><span class="p">;</span>
+<span class="n">G4double</span> <span class="n">world_sizeZ</span>  <span class="o">=</span> <span class="mi">30</span><span class="o">*</span><span class="n">meter</span><span class="p">;</span>
+<span class="n">G4Box</span><span class="o">*</span> <span class="n">solidWorld</span> <span class="o">=</span>
+        <span class="k">new</span> <span class="n">G4Box</span><span class="p">(</span><span class="s">&quot;World&quot;</span><span class="p">,</span>                       <span class="c1">//its name</span>
+                    <span class="mf">0.5</span><span class="o">*</span><span class="n">world_sizeXY</span><span class="p">,</span> <span class="mf">0.5</span><span class="o">*</span><span class="n">world_sizeXY</span><span class="p">,</span> <span class="mf">0.5</span><span class="o">*</span><span class="n">world_sizeZ</span><span class="p">);</span>     <span class="c1">//its size</span>
+</pre></div>
+</div>
+<p>Теперь на основе этого тела, создадим логический объем.
+Но перед этим нам нужно получить экземпляр класса описывающего материал из которого состоит объем.
+Можно либо создать материал самостоятельно или взять один из готовых материалов, используя <code class="docutils literal notranslate"><span class="pre">NistManager</span></code>:</p>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="k">auto</span> <span class="n">nist</span> <span class="o">=</span> <span class="n">G4NistManager</span><span class="o">::</span><span class="n">Instance</span><span class="p">();</span>
+<span class="n">G4Material</span><span class="o">*</span> <span class="n">world_mat</span> <span class="o">=</span> <span class="n">nist</span><span class="o">-&gt;</span><span class="n">FindOrBuildMaterial</span><span class="p">(</span><span class="s">&quot;G4_AIR&quot;</span><span class="p">);</span>
+</pre></div>
+</div>
+<p>Логический объем:</p>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="n">G4LogicalVolume</span><span class="o">*</span> <span class="n">logicWorld</span> <span class="o">=</span>
+        <span class="k">new</span> <span class="n">G4LogicalVolume</span><span class="p">(</span><span class="n">solidWorld</span><span class="p">,</span>          <span class="c1">//its solid</span>
+                            <span class="n">world_mat</span><span class="p">,</span>           <span class="c1">//its material</span>
+                            <span class="s">&quot;World&quot;</span><span class="p">);</span>            <span class="c1">//its name</span>
+</pre></div>
+</div>
+<p>Отметим что на основе одно логического объема мы можем создавать много разных физических оюъемов, которые будут отличаться положением в пространтсве.</p>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="c1">// Option to switch on/off checking of volumes overlaps</span>
+<span class="n">G4bool</span> <span class="n">checkOverlaps</span> <span class="o">=</span> <span class="nb">true</span><span class="p">;</span>
+<span class="n">G4VPhysicalVolume</span><span class="o">*</span> <span class="n">physWorld</span> <span class="o">=</span>
+        <span class="k">new</span> <span class="n">G4PVPlacement</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span>                     <span class="c1">//no rotation</span>
+                            <span class="n">G4ThreeVector</span><span class="p">(),</span>       <span class="c1">//at (0,0,0)</span>
+                            <span class="n">logicWorld</span><span class="p">,</span>            <span class="c1">//its logical volume</span>
+                            <span class="s">&quot;World&quot;</span><span class="p">,</span>               <span class="c1">//its name</span>
+                            <span class="mi">0</span><span class="p">,</span>                     <span class="c1">//its mother  volume</span>
+                            <span class="nb">false</span><span class="p">,</span>                 <span class="c1">//no boolean operation</span>
+                            <span class="mi">0</span><span class="p">,</span>                     <span class="c1">//copy number</span>
+                            <span class="n">checkOverlaps</span><span class="p">);</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="id2">
+<h2>Запуск визуализации<a class="headerlink" href="#id2" title="Ссылка на этот заголовок">¶</a></h2>
+<p>TODO()</p>
+</div>
+<div class="section" id="id3">
+<h2>Планируем структуру геометрии<a class="headerlink" href="#id3" title="Ссылка на этот заголовок">¶</a></h2>
+<p>TODO()</p>
+</div>
+<div class="section" id="id4">
+<h2>Создаем калориметер<a class="headerlink" href="#id4" title="Ссылка на этот заголовок">¶</a></h2>
+<p>TODO()</p>
+</div>
+<div class="section" id="id5">
+<h2>Раскрашиваем калориметр<a class="headerlink" href="#id5" title="Ссылка на этот заголовок">¶</a></h2>
+<p>Для того чтобы сделать модель калориметра немного нагляднее давайте раскрасим её, для этого в файл <code class="docutils literal notranslate"><span class="pre">init_vis.mac</span></code> добавим следующие строки:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">/</span><span class="n">vis</span><span class="o">/</span><span class="n">geometry</span><span class="o">/</span><span class="nb">set</span><span class="o">/</span><span class="n">colour</span> <span class="n">lead</span> <span class="mi">0</span> <span class="mf">0.5</span> <span class="mf">0.5</span> <span class="mf">0.5</span>
+<span class="o">/</span><span class="n">vis</span><span class="o">/</span><span class="n">geometry</span><span class="o">/</span><span class="nb">set</span><span class="o">/</span><span class="n">forceSolid</span> <span class="n">lead</span>
+<span class="o">/</span><span class="n">vis</span><span class="o">/</span><span class="n">geometry</span><span class="o">/</span><span class="nb">set</span><span class="o">/</span><span class="n">colour</span> <span class="n">plastic</span> <span class="mi">0</span> <span class="mf">0.1</span> <span class="mf">0.5</span> <span class="mf">0.5</span>
+<span class="o">/</span><span class="n">vis</span><span class="o">/</span><span class="n">geometry</span><span class="o">/</span><span class="nb">set</span><span class="o">/</span><span class="n">forceSolid</span> <span class="n">plastic</span>
+</pre></div>
+</div>
+<p>Команда <code class="docutils literal notranslate"><span class="pre">/vis/geometry/set/colour</span></code> задает цвет физических объемов связанных с логическим объемом <code class="docutils literal notranslate"><span class="pre">lead</span></code>, следующая цифра задает насколько глубоко применять данный цвет к дочерним объема, а последние три цифры задают собсвтенно цвет в формате RGB. Команда <code class="docutils literal notranslate"><span class="pre">/vis/geometry/set/forceSolid</span></code> указывает что нужно отрисовывать не только грани объемов, но и их поверхность.</p>
+<p>Кроме того давайте инвретируем цвета фона и граней объемов:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">/</span><span class="n">vis</span><span class="o">/</span><span class="n">viewer</span><span class="o">/</span><span class="nb">set</span><span class="o">/</span><span class="n">background</span> <span class="n">white</span>
+<span class="o">/</span><span class="n">vis</span><span class="o">/</span><span class="n">geometry</span><span class="o">/</span><span class="nb">set</span><span class="o">/</span><span class="n">colour</span> <span class="nb">all</span> <span class="o">-</span><span class="mi">1</span> <span class="mi">0</span> <span class="mi">0</span> <span class="mi">0</span>
+</pre></div>
+</div>
+<p>Первая команда меняет фон сцены, вторая делает цвет граней всех объемов черным.</p>
+<p>Также можно добавить на сцену координатные оси и текующую дату:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">/</span><span class="n">vis</span><span class="o">/</span><span class="n">scene</span><span class="o">/</span><span class="n">add</span><span class="o">/</span><span class="n">axes</span>
+<span class="o">/</span><span class="n">vis</span><span class="o">/</span><span class="n">scene</span><span class="o">/</span><span class="n">add</span><span class="o">/</span><span class="n">date</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="id6">
+<h2>Создаем трековый детектор<a class="headerlink" href="#id6" title="Ссылка на этот заголовок">¶</a></h2>
+<p>TODO()</p>
+</div>
+<div class="section" id="id7">
+<h2>Вращение физических объемов<a class="headerlink" href="#id7" title="Ссылка на этот заголовок">¶</a></h2>
+<p>Для того что бы создать второй детектор мы должны просто зеркально отразить первый детектор. Как мы знаем зеркальное отражение может быть выражено через повороты, а значит нам нужно просто  правильно повернуть физический объем соответсвующий второму детектору. Повороты задаютс через матрицу повороов определяемую классом <code class="docutils literal notranslate"><span class="pre">G4RotationMatrix</span></code>. Данный класс имеет несколько констуркторов, использующие различные способы создания матрицы поворота. В нашем проекте я предлагаю использовать <a class="reference external" href="https://ru.wikipedia.org/wiki/%D0%A3%D0%B3%D0%BB%D1%8B_%D0%AD%D0%B9%D0%BB%D0%B5%D1%80%D0%B0">Углы Эйлера</a>, давайте повернем наш объем на какие-нибудь произвольные углы:</p>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="k">auto</span> <span class="n">rotation</span> <span class="o">=</span>  <span class="k">new</span> <span class="n">G4RotationMatrix</span><span class="p">(</span><span class="n">CLHEP</span><span class="o">::</span><span class="n">pi</span><span class="p">,</span><span class="n">CLHEP</span><span class="o">::</span><span class="n">pi</span><span class="p">,</span><span class="n">CLHEP</span><span class="o">::</span><span class="n">pi</span><span class="p">);</span>
+</pre></div>
+</div>
+<p>Тогда физический объем второго детектора будет выглядет так:</p>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span> <span class="k">auto</span> <span class="n">leftDetector</span> <span class="o">=</span> <span class="k">new</span> <span class="n">G4PVPlacement</span><span class="p">(</span><span class="n">rotation</span><span class="p">,</span> <span class="n">G4ThreeVector</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="o">-</span><span class="n">detector_length</span> <span class="o">/</span> <span class="mi">2</span> <span class="o">-</span> <span class="mf">0.1</span> <span class="o">*</span> <span class="n">meter</span><span class="p">),</span> <span class="n">detectorLogic</span><span class="p">,</span>
+                                          <span class="s">&quot;leftDetector&quot;</span><span class="p">,</span> <span class="n">logicWorld</span><span class="p">,</span> <span class="nb">false</span><span class="p">,</span> <span class="mi">1</span><span class="p">);</span>
+</pre></div>
+</div>
+<p>Посмотрим на результат:
+<img alt="../../_images/" src="../../_images/" />
+Попробуйте определить на какие углы нужно повернуть объем чтобы получить правильную копию. Обратите внимание на то что наша система обладает симметрией относительно центральной оси детектора, что затрудняет определение правильности расположения по визуализации. В таком случае можно например создать дополнительный объем нарушающий симметрию и отслеживать его расположение, добавляя его только при отладке приложения.</p>
+</div>
+<div class="section" id="id8">
+<h2>Создаем магнитное поле<a class="headerlink" href="#id8" title="Ссылка на этот заголовок">¶</a></h2>
+<p>Основная часть трекового детектора это поворотный магнит, который искривляет траекторию зараяженных частиц. Для того что создать магнит нужно описать логические и физические объемы задающие область с полем и прикрепить к логическому объему объекты описывающие магнитное поле. Обычно это делеают переопределив метод <code class="docutils literal notranslate"><span class="pre">ConstructSDandField</span></code> класса <code class="docutils literal notranslate"><span class="pre">G4VUserDetectorConstruction</span></code>:</p>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="kt">void</span> <span class="n">DetectorConstruction</span><span class="o">::</span><span class="n">ConstructSDandField</span><span class="p">()</span> <span class="p">{</span>
+    <span class="n">G4VUserDetectorConstruction</span><span class="o">::</span><span class="n">ConstructSDandField</span><span class="p">();</span>
+    <span class="n">G4MagneticField</span> <span class="o">*</span><span class="n">magField</span><span class="p">;</span>
+    <span class="n">magField</span> <span class="o">=</span> <span class="k">new</span> <span class="n">G4UniformMagField</span><span class="p">(</span><span class="n">G4ThreeVector</span><span class="p">(</span><span class="mf">0.</span><span class="p">,</span> <span class="mi">50</span><span class="o">*</span><span class="n">kilogauss</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">));</span>
+    <span class="k">auto</span> <span class="n">fieldMgr</span> <span class="o">=</span> <span class="k">new</span> <span class="n">G4FieldManager</span><span class="p">;</span>
+    <span class="n">fieldMgr</span><span class="o">-&gt;</span><span class="n">SetDetectorField</span><span class="p">(</span><span class="n">magField</span><span class="p">);</span>
+    <span class="n">fieldMgr</span><span class="o">-&gt;</span><span class="n">CreateChordFinder</span><span class="p">(</span><span class="n">magField</span><span class="p">);</span>
+    <span class="n">magnetLogic</span><span class="o">-&gt;</span><span class="n">SetFieldManager</span><span class="p">(</span><span class="n">fieldMgr</span><span class="p">,</span> <span class="nb">true</span><span class="p">);</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<p>Мы будем прикреплять поле к логическому объему <code class="docutils literal notranslate"><span class="pre">magentLogic</span></code>, который мы предварительно создали. Создание однородного магнитного поле это простая (по сравнению с неоднородными и смешанными полями) процедура, в которой нужно:</p>
+<ul class="simple">
+<li><p>задать поле с помощью класса <code class="docutils literal notranslate"><span class="pre">G4UniformMagField</span></code>, который принимает на вход вектор магнитной индукции;</p></li>
+<li><p>зарегестрировать поле в экземпляре класса <code class="docutils literal notranslate"><span class="pre">G4FieldManager</span></code>;</p></li>
+<li><p>создать решатель уравнений движения в поле с помощью метода <code class="docutils literal notranslate"><span class="pre">CreateChordFinder</span></code>;</p></li>
+<li><p>и наконец, проассоциировать менедеджер поля с логическим объемом: <code class="docutils literal notranslate"><span class="pre">magnetLogic-&gt;SetFieldManager(fieldMgr,</span> <span class="pre">true);</span></code>.</p></li>
+</ul>
+<p>Готово, можно испытывать магнит, однако для этого нам нужно научиться запускать не только нейтральный гамма-кванты, но и зараяженные электроны и позитроны, о чем и пойдет речь в следующей главе.</p>
+</div>
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="gen.html" class="btn btn-neutral float-right" title="Генерация первичной частицы" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="cmake.html" class="btn btn-neutral float-left" title="Сборка проекта при помощи cmake" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2020, Mikhail Zelenyi
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

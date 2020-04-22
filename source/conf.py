@@ -36,7 +36,8 @@ release = '0.0.1'
 
 extensions = [
     "sphinx_rtd_theme",
-    'recommonmark'
+    'recommonmark',
+    "sphinx.ext.githubpages"
 ]
 
 source_suffix = {
@@ -79,6 +80,7 @@ from recommonmark.transform import AutoStructify
 def setup(app):
     app.add_config_value('recommonmark_config', {
         'enable_inline_math' : True,
-        "auto_toc_maxdepth" : 3
+        "auto_toc_maxdepth" : 3,
+        "enable_eval_rst" : True
     }, True)
     app.add_transform(AutoStructify)

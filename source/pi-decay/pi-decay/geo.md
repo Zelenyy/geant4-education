@@ -51,7 +51,47 @@ G4VPhysicalVolume* physWorld =
 
 ### Запуск визуализации
 
-TODO()
+Теперь давайте посмотрим на нашу геометрию. Для этого скомпилируем программу и запустим её без аргументов.
+Откроется окно визуализации в котором мы увидим отрисованной нащу геометрию. Давайте разберём как вызывается режим визуализации. За это отвечает эта часть кода:
+```cpp
+// main.cc
+int main(int argc, char **argv) {
+    G4UIExecutive *ui = nullptr;
+    if (argc == 1) {
+        ui = new G4UIExecutive(argc, argv);
+    }
+    ...
+
+    G4VisManager *visManager = new G4VisExecutive;
+    visManager->Initialize();
+
+    // Get the pointer to the User Interface manager
+    G4UImanager *UImanager = G4UImanager::GetUIpointer();
+
+    // Process macro or start UI session
+    if (!ui) {
+        // batch mode
+        G4String command = "/control/execute ";
+        G4String fileName = argv[1];
+        UImanager->ApplyCommand(command + fileName);
+    } else {
+        // interactive mode
+        UImanager->ApplyCommand("/control/execute init_vis.mac");
+        ui->SessionStart();
+        delete ui;
+    }
+    ...
+}
+```
+
+```
+/vis/open OGL
+/vis/drawVolume worlds
+/vis/scene/add/trajectories
+/vis/scene/endOfEventAction accumulate
+
+/control/saveHistory
+```
 
 ### Планируем структуру геометрии
 
